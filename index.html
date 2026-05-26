@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>張予｜AI × Excel × 職場效率專家</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F4EEE7',
+            soft: '#FBF7F2',
+            orangeWarm: '#E39A56',
+            caramel: '#F2C694',
+            coffee: '#6B4F3D',
+            warmGray: '#A69283',
+            peach: '#E8DDD0',
+            borderGray: '#DDD3C8'
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(227,154,86,0.12)',
+            card: '0 20px 40px rgba(107,79,61,0.06)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: #F4EEE7;
+      color: #6B4F3D;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: rgba(227,154,86,0.2);
+    }
+
+    .glass-nav {
+      backdrop-filter: blur(12px);
+      background: rgba(244, 238, 231, 0.85);
+      border-bottom: 1px solid rgba(221,211,200,0.5);
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(227,154,86,0.22) 0%, rgba(227,154,86,0) 70%);
+      filter: blur(20px);
+      z-index: 0;
+      animation: floatGlow 8s ease-in-out infinite;
+    }
+
+    .hero-glow-2 {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(232,221,208,0.35) 0%, rgba(232,221,208,0) 70%);
+      filter: blur(20px);
+      z-index: 0;
+      animation: floatGlow 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatGlow {
+      0% {
+        transform: translateY(0px) translateX(0px);
+      }
+      50% {
+        transform: translateY(-20px) translateX(10px);
+      }
+      100% {
+        transform: translateY(0px) translateX(0px);
+      }
+    }
+
+    .floating {
+      animation: floating 6s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .typing-cursor::after {
+      content: "|";
+      animation: blink 0.8s infinite;
+      margin-left: 4px;
+      color: #E39A56;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .soft-card {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-primary {
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(227,154,86,0.18);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(227,154,86,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(227,154,86,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .decor-circle {
+      position: absolute;
+      border-radius: 999px;
+      opacity: 0.18;
+      z-index: 0;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0%;
+      height: 2px;
+      background: #E39A56;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Background Decorations -->
+  <div class="decor-circle bg-orangeWarm w-40 h-40 top-20 left-[-50px] blur-3xl fixed" style="opacity: 0.15;"></div>
+  <div class="decor-circle bg-peach w-56 h-56 bottom-20 right-[-50px] blur-3xl fixed" style="opacity: 0.12;"></div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#hero" class="font-bold text-xl text-coffee tracking-wide hover:text-orangeWarm transition-colors">
+        張予
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-coffee/70 hover:text-coffee">
+        <a href="#hero" class="nav-link">首頁</a>
+        <a href="#about" class="nav-link">關於我</a>
+        <a href="#services" class="nav-link">產品服務</a>
+        <a href="#consult" class="nav-link">預約諮詢</a>
+      </div>
+
+      <!-- Mobile Button -->
+      <button id="menuBtn" class="md:hidden text-coffee">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+      class="hidden md:hidden px-6 pb-6 text-warmGray bg-[#F4EEE7]/95 backdrop-blur-xl">
+      <div class="flex flex-col gap-5 pt-4">
+        <a href="#hero" class="mobile-link">首頁</a>
+        <a href="#about" class="mobile-link">關於我</a>
+        <a href="#services" class="mobile-link">產品服務</a>
+        <a href="#consult" class="mobile-link">預約諮詢</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero"
+    class="relative min-h-screen flex items-center overflow-hidden pt-28 pb-20 px-6">
+
+    <div class="hero-glow top-[-100px] left-[-100px]"></div>
+    <div class="hero-glow-2 bottom-0 right-0"></div>
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+
+      <!-- Left -->
+      <div class="space-y-8 reveal">
+
+        <div
+          class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-soft shadow-soft text-sm text-orangeWarm font-medium">
+          <span class="w-2 h-2 bg-orangeWarm rounded-full"></span>
+          AI × Excel × 資料分析 × 職場效率
+        </div>
+
+        <div class="space-y-6">
+          <h1 class="text-4xl md:text-6xl font-black leading-tight text-coffee">
+            <span id="typingText" class="typing-cursor"></span>
+          </h1>
+
+          <p class="text-lg md:text-xl leading-relaxed text-warmGray max-w-2xl">
+            我不只是教 Excel 功能，<br class="hidden md:block">
+            而是幫你用 AI、資料分析與工作流程設計，
+            把每天那些重複、煩躁又耗時間的事情，變得更省力、更清楚、更有效率。
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="https://calendar.app.google/UdvxbaNbaxeESB9AA"
+            target="_blank"
+            class="btn-primary px-7 py-4 rounded-full bg-orangeWarm text-white font-medium shadow-soft hover:bg-[#D18442] transition-colors">
+            預約課程諮詢
+          </a>
+
+          <a href="#services"
+            class="btn-primary px-7 py-4 rounded-full bg-soft text-orangeWarm font-medium border-2 border-borderGray hover:border-orangeWarm transition-colors">
+            看看我的服務
+          </a>
+        </div>
+
+        <!-- Trust -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-5 pt-8">
+          <div class="soft-card rounded-3xl p-5 shadow-card">
+            <div class="text-3xl font-black text-orangeWarm">14.5萬+</div>
+            <div class="text-sm text-warmGray mt-2">Instagram 追蹤者</div>
+          </div>
+
+          <div class="soft-card rounded-3xl p-5 shadow-card">
+            <div class="text-3xl font-black text-orangeWarm">2+</div>
+            <div class="text-sm text-warmGray mt-2">線上課程平台合作</div>
+          </div>
+
+          <div class="soft-card rounded-3xl p-5 shadow-card col-span-2 md:col-span-1">
+            <div class="text-3xl font-black text-orangeWarm">企業 × 校園</div>
+            <div class="text-sm text-warmGray mt-2">多場內訓與授課經驗</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Visual -->
+      <div class="relative reveal">
+
+        <div class="grid-pattern rounded-[40px] p-8 relative overflow-hidden">
+          <div
+            class="absolute top-6 right-6 px-4 py-2 rounded-full bg-white shadow-soft text-sm text-caramel floating">
+            Excel 廣播電台
+          </div>
+
+          <div
+            class="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 shadow-card border border-white/70">
+
+            <div class="space-y-6">
+
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-warmGray">個人品牌</div>
+                  <div class="text-2xl font-bold text-coffee mt-1">張予</div>
+                </div>
+
+                <div
+                  class="w-16 h-16 rounded-2xl bg-peach flex items-center justify-center text-3xl floating">
+                  📊
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="bg-soft rounded-2xl p-4">
+                  <div class="text-sm text-warmGray">擅長領域</div>
+                  <div class="font-semibold mt-2 text-coffee">
+                    Excel、AI 工作流程、資料分析、商用圖表
+                  </div>
+                </div>
+
+                <div class="bg-soft rounded-2xl p-4">
+                  <div class="text-sm text-warmGray">教學特色</div>
+                  <div class="font-semibold mt-2 text-coffee">
+                    把複雜工具變成真正能落地的工作方法
+                  </div>
+                </div>
+
+                <div class="bg-soft rounded-2xl p-4">
+                  <div class="text-sm text-warmGray">課程與合作</div>
+                  <div class="font-semibold mt-2 text-coffee">
+                    Hahow、知識衛星、企業內訓、大專院校
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Floating Elements -->
+          <div
+            class="absolute -left-5 top-20 bg-white rounded-2xl px-4 py-3 shadow-soft text-sm text-caramel floating">
+            AI 自動化
+          </div>
+
+          <div
+            class="absolute bottom-10 -right-5 bg-white rounded-2xl px-4 py-3 shadow-soft text-sm text-caramel floating"
+            style="animation-delay:1s;">
+            資料視覺化
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center reveal">
+        <div class="text-caramel font-medium tracking-widest text-sm mb-4">
+          ABOUT
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-black text-coffee leading-tight">
+          我相信，真正有價值的科技<br>
+          是能讓人工作變得更輕鬆
+        </h2>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-14 mt-20 items-center">
+
+        <div class="reveal">
+          <div class="soft-card rounded-[36px] p-10 shadow-card leading-loose text-lg text-warmGray">
+            <p>
+              我畢業於國立臺灣科技大學資訊工程學系，原本走在典型工程師的路上，
+              卻慢慢發現，比起寫出只有少數人看得懂的技術，我更想做的是——
+              <span class="text-caramel font-semibold">讓更多人真的用得懂科技。</span>
+            </p>
+
+            <p class="mt-6">
+              後來，我投入教育與產品領域，開始研究如何把複雜的 Excel、AI 與資料分析工具，
+              轉化成貼近職場、能立即應用的方法。
+            </p>
+
+            <p class="mt-6">
+              我創立 Instagram「Excel 廣播電台」，希望用更有趣、更容易理解的方式，
+              陪大家一起解決那些每天都會遇到的工作卡點。
+            </p>
+
+            <p class="mt-6">
+              從資料整理、商用圖表，到 AI 工作流程與效率優化，
+              我始終相信：
+              <span class="text-coffee font-semibold">
+                好工具真正的價值，不在功能有多厲害，而是它能不能幫你少一點煩躁、多一點從容。
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-6 reveal">
+
+          <div class="soft-card rounded-3xl p-7 shadow-card">
+            <div class="text-sm text-caramel font-semibold">品牌影響力</div>
+            <div class="text-2xl font-bold text-coffee mt-2">
+              Excel 廣播電台
+            </div>
+            <p class="text-warmGray mt-4 leading-relaxed">
+              以貼近職場情境的內容，累積超過 14.5 萬名追蹤者，持續推廣 Excel 與 AI 的實用工作應用。
+            </p>
+          </div>
+
+          <div class="soft-card rounded-3xl p-7 shadow-card">
+            <div class="text-sm text-caramel font-semibold">出版作品</div>
+            <div class="text-2xl font-bold text-coffee mt-2">
+              《三秒鐘的出其不意》
+            </div>
+            <p class="text-warmGray mt-4 leading-relaxed">
+              透過 Excel × AI 工作技巧，幫助更多人用更聰明的方式完成工作。
+            </p>
+          </div>
+
+          <div class="soft-card rounded-3xl p-7 shadow-card">
+            <div class="text-sm text-caramel font-semibold">授課經驗</div>
+            <div class="text-2xl font-bold text-coffee mt-2">
+              企業 × 校園 × 平台合作
+            </div>
+            <p class="text-warmGray mt-4 leading-relaxed">
+              曾受邀至 Hahow、知識衛星、外貿協會、職訓局、大專院校與青年創業單位授課。
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section class="py-24 px-6 bg-[#FBF7F2]">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center reveal">
+        <div class="text-caramel font-medium tracking-widest text-sm mb-4">
+          IMPACT
+        </div>
+
+        <h2 class="text-4xl font-black text-coffee">
+          不只是教學，更是工作方式的改變
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-7 mt-16">
+
+        <div class="soft-card rounded-3xl p-8 shadow-card reveal">
+          <div class="text-5xl mb-5">📱</div>
+          <div class="text-3xl font-black text-orangeWarm">14.5萬+</div>
+          <div class="mt-3 text-warmGray leading-relaxed">
+            Instagram 追蹤者
+          </div>
+        </div>
+
+        <div class="soft-card rounded-3xl p-8 shadow-card reveal">
+          <div class="text-5xl mb-5">📘</div>
+          <div class="text-2xl font-black text-orangeWarm">出版作者</div>
+          <div class="mt-3 text-warmGray leading-relaxed">
+            Excel × AI 工作效率書籍
+          </div>
+        </div>
+
+        <div class="soft-card rounded-3xl p-8 shadow-card reveal">
+          <div class="text-5xl mb-5">🎓</div>
+          <div class="text-2xl font-black text-orangeWarm">多平台講師</div>
+          <div class="mt-3 text-warmGray leading-relaxed">
+            Hahow × 知識衛星
+          </div>
+        </div>
+
+        <div class="soft-card rounded-3xl p-8 shadow-card reveal">
+          <div class="text-5xl mb-5">🏢</div>
+          <div class="text-2xl font-black text-orangeWarm">企業授課</div>
+          <div class="mt-3 text-warmGray leading-relaxed">
+            學校、企業與政府單位合作
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-28 px-6">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="text-center reveal">
+        <div class="text-caramel font-medium tracking-widest text-sm mb-4">
+          SERVICES
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-black text-coffee">
+          把工具真正變成你的工作加速器
+        </h2>
+
+        <p class="text-warmGray text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
+          不論你是剛開始接觸 Excel、希望優化工作流程，
+          或正在導入 AI 與資料分析，我都會用最容易理解的方式，幫你建立真正能落地的能力。
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 mt-20">
+
+        <!-- Card -->
+        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
+          <div class="text-5xl mb-6">📊</div>
+
+          <h3 class="text-2xl font-bold text-coffee">
+            Excel 與資料分析課程
+          </h3>
+
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>職場工作者、初學者、行政與企劃人員</p>
+
+            <p><span class="font-semibold text-coffee">解決問題：</span>表格混亂、公式卡關、報表效率低落</p>
+
+            <p><span class="font-semibold text-coffee">學習成果：</span>建立穩固 Excel 邏輯與資料處理能力</p>
+          </div>
+
+          <a href="#consult"
+            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
+            了解更多 →
+          </a>
+        </div>
+
+        <!-- Card -->
+        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
+          <div class="text-5xl mb-6">🤖</div>
+
+          <h3 class="text-2xl font-bold text-coffee">
+            AI 工具與職場效率應用
+          </h3>
+
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>想提升工作效率的知識工作者</p>
+
+            <p><span class="font-semibold text-coffee">解決問題：</span>重複性工作耗時、流程混亂</p>
+
+            <p><span class="font-semibold text-coffee">學習成果：</span>建立 AI 協作與自動化思維</p>
+          </div>
+
+          <a href="#consult"
+            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
+            了解更多 →
+          </a>
+        </div>
+
+        <!-- Card -->
+        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
+          <div class="text-5xl mb-6">📈</div>
+
+          <h3 class="text-2xl font-bold text-coffee">
+            資料視覺化與商用圖表
+          </h3>
+
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>需要製作簡報、分析報表與商業提案者</p>
+
+            <p><span class="font-semibold text-coffee">解決問題：</span>圖表雜亂、數據難以溝通</p>
+
+            <p><span class="font-semibold text-coffee">學習成果：</span>讓資料更清楚、更有說服力</p>
+          </div>
+
+          <a href="#consult"
+            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
+            了解更多 →
+          </a>
+        </div>
+
+        <!-- Card -->
+        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
+          <div class="text-5xl mb-6">🏫</div>
+
+          <h3 class="text-2xl font-bold text-coffee">
+            客製化企業與校園內訓
+          </h3>
+
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>企業團隊、學校單位、政府與組織</p>
+
+            <p><span class="font-semibold text-coffee">解決問題：</span>團隊效率落差、數據能力不足</p>
+
+            <p><span class="font-semibold text-coffee">學習成果：</span>建立一致且高效率的工作流程</p>
+          </div>
+
+          <a href="#consult"
+            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
+            了解更多 →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section class="py-28 px-6 bg-[#FBF7F2]">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center reveal">
+        <div class="text-caramel font-medium tracking-widest text-sm mb-4">
+          COURSES
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-black text-coffee">
+          線上課程與學習內容
+        </h2>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8 mt-20">
+
+        <!-- 知識衛星課程 -->
+        <a href="https://sat.cool/course/152" target="_blank" class="soft-card rounded-[36px] p-10 shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
+              知識衛星
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-coffee leading-snug">
+            AI 時代的 Excel 效率升級術
+          </h3>
+
+          <p class="text-warmGray mt-6 leading-relaxed">
+            從資料彙整、公式邏輯，到 AI 輔助分析與工作流程優化，建立真正能應用在職場的效率系統。
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">Excel</span>
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">AI 工作流</span>
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">自動化</span>
+          </div>
+
+          <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+            前往課程 <i class="fas fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Hahow 課程 -->
+        <a href="https://hahow.in/courses/637b48b0e5c42265fdd58e31/" target="_blank" class="soft-card rounded-[36px] p-10 shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
+              <i class="fas fa-chalkboard-user"></i>
+            </div>
+            <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
+              Hahow
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-coffee leading-snug">
+            資料視覺化入門：玩轉 Excel 職場商用圖表
+          </h3>
+
+          <p class="text-warmGray mt-6 leading-relaxed">
+            學習如何把數據轉化成真正看得懂、說得清楚的商用圖表與視覺化資訊。
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">資料視覺化</span>
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">商用圖表</span>
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">數據溝通</span>
+          </div>
+
+          <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+            前往課程 <i class="fas fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- 書籍 -->
+        <a href="https://www.books.com.tw/products/0011021120" target="_blank" class="soft-card rounded-[36px] p-10 shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
+              出版作品
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-coffee leading-snug">
+            三秒鐘的出其不意！<br>Excel × AI 幫你工作超省力
+          </h3>
+
+          <p class="text-warmGray mt-6 leading-relaxed">
+            透過實用的 Excel 技巧與 AI 工作方法，幫助你用更聰明的方式完成每一項工作。
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">Excel</span>
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">AI 應用</span>
+            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">工作效率</span>
+          </div>
+
+          <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+            查看書籍 <i class="fas fa-arrow-right"></i>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="py-28 px-6">
+    <div class="max-w-5xl mx-auto text-center reveal">
+
+      <div class="text-caramel font-medium tracking-widest text-sm mb-4">
+        TEACHING PHILOSOPHY
+      </div>
+
+      <h2 class="text-4xl md:text-5xl font-black text-coffee leading-tight">
+        好的教學，不只是教功能
+      </h2>
+
+      <p class="mt-10 text-xl leading-loose text-warmGray">
+        我始終相信，真正重要的不是你背了多少快捷鍵，<br class="hidden md:block">
+        而是當問題出現時，你能不能找到更聰明、更有效率的解法。
+      </p>
+
+      <p class="mt-8 text-lg leading-loose text-warmGray">
+        因此，我的課程不會只是功能堆疊，
+        而是透過系統化的學習與真實職場案例，
+        幫助你建立解決問題的能力。
+      </p>
+
+      <p class="mt-8 text-lg leading-loose text-warmGray">
+        從 Excel、Google Sheets 到 AI 工作流程與資料分析，
+        我希望每一個工具，都能真正成為你工作上的加速器。
+      </p>
+
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="py-28 px-6 bg-[#FBF7F2]">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center reveal">
+        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">
+          CONTACT FORM
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-black text-coffee leading-tight">
+          告訴我你的需求
+        </h2>
+
+        <p class="text-lg text-warmGray leading-relaxed mt-8 max-w-3xl mx-auto">
+          無論是課程詢問、企業內訓、合作提案或任何想法，歡迎填寫表單讓我了解更多。
+        </p>
+      </div>
+
+      <div class="mt-16 flex justify-center">
+      <a href="https://forms.gle/kkERb5NaebJJPczx9"
+          target="_blank"
+          class="btn-primary px-10 py-5 rounded-full bg-orangeWarm text-white font-semibold shadow-soft text-lg hover:bg-[#D18442] transition-colors">
+          填寫需求表單 <i class="fas fa-arrow-right ml-3"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Social Media Icons -->
+  <section class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center reveal mb-12">
+        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">
+          FOLLOW ME
+        </div>
+
+        <h2 class="text-3xl md:text-4xl font-black text-coffee">
+          多元社群連結
+        </h2>
+      </div>
+
+      <!-- Social Icons Grid -->
+      <div class="flex flex-wrap justify-center items-center gap-6 md:gap-10 reveal">
+        
+        <a href="https://line.me/ti/g2/rgytye_Awx6w-W7bK_55tI00s8tKDwDV8K6Mug"
+          target="_blank"
+          class="group relative">
+          <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center shadow-card hover:shadow-lg transition-all duration-300 hover:scale-110">
+            <i class="fab fa-line text-4xl text-green-600"></i>
+          </div>
+          <div class="mt-3 text-center text-sm font-semibold text-coffee opacity-0 group-hover:opacity-100 transition-opacity">
+            LINE
+          </div>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/p/Excel-%E5%BB%A3%E6%92%AD%E9%9B%BB%E5%8F%B0-61556206976271/"
+          target="_blank"
+          class="group relative">
+          <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-card hover:shadow-lg transition-all duration-300 hover:scale-110">
+            <i class="fab fa-facebook text-4xl text-blue-600"></i>
+          </div>
+          <div class="mt-3 text-center text-sm font-semibold text-coffee opacity-0 group-hover:opacity-100 transition-opacity">
+            Facebook
+          </div>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/excel.radio/"
+          target="_blank"
+          class="group relative">
+          <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-100 flex items-center justify-center shadow-card hover:shadow-lg transition-all duration-300 hover:scale-110">
+            <i class="fab fa-instagram text-4xl text-orange-500"></i>
+          </div>
+          <div class="mt-3 text-center text-sm font-semibold text-coffee opacity-0 group-hover:opacity-100 transition-opacity">
+            Instagram
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Decorative Line -->
+      <div class="mt-16 flex justify-center items-center gap-4 text-warmGray text-sm">
+        <div class="h-px bg-gradient-to-r from-transparent to-borderGray w-12"></div>
+        <span>歡迎透過社群與我連絡</span>
+        <div class="h-px bg-gradient-to-l from-transparent to-borderGray w-12"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="consult" class="py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div
+        class="relative overflow-hidden rounded-[42px] bg-gradient-to-br from-[#FBF7F2] to-[#F4EEE7] p-10 md:p-16 shadow-card border border-borderGray">
+
+        <div class="hero-glow opacity-30"></div>
+
+        <div class="relative z-10 max-w-3xl">
+
+          <div class="text-orangeWarm font-medium tracking-widest text-sm mb-5">
+            BOOK A CONSULTATION
+          </div>
+
+          <h2 class="text-4xl md:text-5xl font-black text-coffee leading-tight">
+            想讓 Excel、AI 和資料分析<br>
+            真正變成你的工作加速器嗎？
+          </h2>
+
+          <p class="text-lg text-warmGray leading-relaxed mt-8">
+            無論是企業內訓、學校講座、個人學習、課程合作，
+            或是想優化團隊工作流程，都歡迎預約諮詢。
+          </p>
+
+          <div class="flex flex-wrap gap-5 mt-10">
+
+            <a href="https://calendar.app.google/UdvxbaNbaxeESB9AA"
+              target="_blank"
+              class="btn-primary px-8 py-5 rounded-full bg-orangeWarm text-white font-semibold shadow-soft hover:bg-[#D18442] transition-colors">
+              預約諮詢時間
+            </a>
+
+            <a href="#services"
+              class="btn-primary px-8 py-5 rounded-full bg-soft border-2 border-borderGray text-coffee font-semibold hover:border-orangeWarm transition-colors">
+              查看服務內容
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="px-6 py-14 border-t border-borderGray">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-10">
+
+      <div>
+        <div class="text-2xl font-black text-coffee">
+          張予
+        </div>
+
+        <div class="mt-3 text-warmGray leading-relaxed">
+          Excel 廣播電台<br>
+          AI × Excel × 資料分析 × 職場效率
+        </div>
+
+        <div class="mt-5 text-sm text-caramel">
+          用更聰明的方法，把工作變得更輕鬆。
+        </div>
+      </div>
+
+      <div class="flex flex-col items-start md:items-end gap-4">
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})"
+          class="btn-primary px-6 py-3 rounded-full bg-soft border-2 border-borderGray text-coffee font-medium hover:border-orangeWarm transition-colors">
+          回到頂部 ↑
+        </button>
+
+        <div class="text-sm text-warmGray">
+          © 2026 Zhang Yu. All Rights Reserved.
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ==========================
+    // Mobile Menu
+    // ==========================
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // ==========================
+    // Typing Effect
+    // ==========================
+    const lines = [
+      "分享職場上沒人教你的 Excel 技巧",
+      "幫你省下無數個兩三秒和一肚子煩躁"
+    ];
+
+    const typingElement = document.getElementById('typingText');
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+      const currentLine = lines[lineIndex];
+
+      if (!isDeleting) {
+        typingElement.innerHTML = currentLine.substring(0, charIndex + 1).replace('\n', '<br>');
+        charIndex++;
+
+        if (charIndex === currentLine.length) {
+          isDeleting = true;
+          setTimeout(typeEffect, 1800);
+          return;
+        }
+      } else {
+        typingElement.innerHTML = currentLine.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          lineIndex = (lineIndex + 1) % lines.length;
+        }
+      }
+
+      setTimeout(typeEffect, isDeleting ? 25 : 85);
+    }
+
+    typeEffect();
+
+    // ==========================
+    // Scroll Reveal Animation
+    // ==========================
+    const reveals = document.querySelectorAll('.reveal');
+
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+
+      reveals.forEach(reveal => {
+        const revealTop = reveal.getBoundingClientRect().top;
+
+        if (revealTop < windowHeight - 80) {
+          reveal.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+  </script>
+
+</body>
+</html>
