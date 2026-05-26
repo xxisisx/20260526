@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI MV Studio｜AI MV 製作招商網站</title>
+  <meta name="description" content="AI MV 製作、品牌音樂影像、藝人宣傳片與商業招商合作 landing page。" />
+  <style>
+    :root {
+      --bg: #05040a;
+      --text: #f8f7ff;
+      --muted: rgba(248, 247, 255, .68);
+      --line: rgba(255,255,255,.16);
+      --glass: rgba(255,255,255,.08);
+      --glass-strong: rgba(255,255,255,.14);
+      --accent: #b6ff5c;
+      --accent-2: #8d5cff;
+      --accent-3: #ff4fd8;
+      --shadow: 0 24px 80px rgba(0,0,0,.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.77777778vh;
+      min-width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: 0;
+      opacity: .62;
+      filter: saturate(1.15) contrast(1.08) brightness(.75);
+    }
+
+    .cinematic-overlay,
+    .grain,
+    .spotlight {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .cinematic-overlay {
+      z-index: -3;
+      background:
+        radial-gradient(circle at 24% 24%, rgba(141,92,255,.34), transparent 34%),
+        radial-gradient(circle at 78% 16%, rgba(255,79,216,.22), transparent 30%),
+        linear-gradient(90deg, rgba(5,4,10,.94) 0%, rgba(5,4,10,.62) 48%, rgba(5,4,10,.86) 100%),
+        linear-gradient(180deg, rgba(5,4,10,.2) 0%, rgba(5,4,10,.82) 82%, #05040a 100%);
+    }
+
+    .spotlight {
+      z-index: -2;
+      background: radial-gradient(circle at 50% 35%, rgba(182,255,92,.12), transparent 34%);
+      mix-blend-mode: screen;
+    }
+
+    .grain {
+      z-index: -1;
+      opacity: .15;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='.55'/%3E%3C/svg%3E");
+    }
+
+    .enter-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(141,92,255,.28), transparent 34%),
+        linear-gradient(180deg, rgba(5,4,10,.72), rgba(5,4,10,.94));
+      backdrop-filter: blur(16px);
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+
+    .enter-gate.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .enter-card {
+      width: min(720px, 100%);
+      padding: clamp(28px, 5vw, 56px);
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      background: linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .enter-kicker,
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      color: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.07);
+      letter-spacing: .14em;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 24px var(--accent);
+    }
+
+    .enter-card h1 {
+      margin: 22px 0 12px;
+      font-size: clamp(42px, 8vw, 92px);
+      line-height: .9;
+      letter-spacing: -.08em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(110deg, #fff 0%, #b6ff5c 32%, #8d5cff 70%, #ff4fd8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .enter-card p {
+      max-width: 560px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .enter-button,
+    .primary-button,
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      min-height: 52px;
+      padding: 0 22px;
+      cursor: pointer;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    .enter-button,
+    .primary-button {
+      border: 0;
+      color: #0d0b12;
+      background: linear-gradient(135deg, var(--accent), #fff36b);
+      font-weight: 900;
+      box-shadow: 0 18px 50px rgba(182,255,92,.25);
+    }
+
+    .secondary-button {
+      border: 1px solid rgba(255,255,255,.2);
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+      font-weight: 800;
+    }
+
+    .enter-button:hover,
+    .primary-button:hover,
+    .secondary-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      padding: 18px clamp(18px, 4vw, 54px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: linear-gradient(180deg, rgba(5,4,10,.86), rgba(5,4,10,0));
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 950;
+      letter-spacing: -.04em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #09070f;
+      background: conic-gradient(from 180deg, var(--accent), #fff, var(--accent-2), var(--accent-3), var(--accent));
+      box-shadow: 0 0 34px rgba(182,255,92,.22);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: rgba(5,4,10,.4);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: rgba(255,255,255,.76);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav a:hover { background: rgba(255,255,255,.1); color: #fff; }
+
+    .header-cta {
+      padding: 12px 16px;
+      border-radius: 999px;
+      color: #0d0b12;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .hero {
+      min-height: 100svh;
+      padding: 132px clamp(18px, 5vw, 72px) 70px;
+      display: grid;
+      align-items: end;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .62fr);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: end;
+      width: min(1240px, 100%);
+      margin: 0 auto;
+    }
+
+    .hero-copy h2 {
+      margin: 20px 0 18px;
+      max-width: 900px;
+      font-size: clamp(52px, 8vw, 126px);
+      line-height: .88;
+      letter-spacing: -.09em;
+    }
+
+    .hero-copy p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 22px);
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .hero-stats {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 760px;
+    }
+
+    .stat {
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 24px;
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(20px);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(26px, 4vw, 44px);
+      letter-spacing: -.06em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .pitch-card {
+      position: relative;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 34px;
+      background: linear-gradient(160deg, rgba(255,255,255,.15), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px);
+      overflow: hidden;
+    }
+
+    .pitch-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(182,255,92,.35), transparent 30%, rgba(255,79,216,.22));
+      opacity: .8;
+      z-index: -1;
+    }
+
+    .pitch-card h3 {
+      margin: 0 0 14px;
+      font-size: 28px;
+      letter-spacing: -.05em;
+    }
+
+    .pitch-list {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pitch-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: rgba(255,255,255,.78);
+      line-height: 1.6;
+    }
+
+    .check {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #0d0b12;
+      background: var(--accent);
+      font-weight: 950;
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    section {
+      padding: 94px clamp(18px, 5vw, 72px);
+    }
+
+    .section-inner {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .section-head h2 {
+      margin: 14px 0 0;
+      max-width: 760px;
+      font-size: clamp(38px, 5.5vw, 74px);
+      line-height: .98;
+      letter-spacing: -.075em;
+    }
+
+    .section-head p {
+      max-width: 420px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 280px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 32px;
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(18px);
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,.11);
+      border-color: rgba(182,255,92,.34);
+    }
+
+    .card .num {
+      display: inline-flex;
+      width: 46px;
+      height: 46px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      color: #0d0b12;
+      background: #fff;
+      font-weight: 950;
+    }
+
+    .card h3 {
+      margin: 28px 0 10px;
+      font-size: 25px;
+      letter-spacing: -.05em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .showcase-panel {
+      min-height: 470px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 36px;
+      overflow: hidden;
+      background: rgba(255,255,255,.06);
+      position: relative;
+    }
+
+    .showcase-panel.large {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(182,255,92,.2), transparent 28%),
+        radial-gradient(circle at 80% 76%, rgba(255,79,216,.18), transparent 34%),
+        rgba(255,255,255,.07);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      padding: 24px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 24px;
+      background: rgba(255,255,255,.06);
+    }
+
+    .timeline-item strong { color: var(--accent); }
+    .timeline-item h4 { margin: 0 0 6px; font-size: 18px; }
+    .timeline-item p { margin: 0; color: var(--muted); line-height: 1.65; }
+
+    .big-word {
+      font-size: clamp(64px, 10vw, 138px);
+      line-height: .82;
+      letter-spacing: -.1em;
+      font-weight: 950;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .price-card {
+      padding: 26px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 32px;
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(18px);
+    }
+
+    .price-card.featured {
+      background: linear-gradient(160deg, rgba(182,255,92,.2), rgba(255,255,255,.07));
+      border-color: rgba(182,255,92,.4);
+      transform: translateY(-12px);
+    }
+
+    .price-card h3 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -.05em;
+    }
+
+    .price {
+      margin: 18px 0 14px;
+      font-size: 42px;
+      font-weight: 950;
+      letter-spacing: -.07em;
+    }
+
+    .price span {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0;
+      font-weight: 700;
+    }
+
+    .price-card ul {
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.6;
+    }
+
+    .contact {
+      padding-bottom: 44px;
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 18px;
+      padding: clamp(24px, 5vw, 44px);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at 0 0, rgba(182,255,92,.18), transparent 32%),
+        linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .contact-box h2 {
+      margin: 0 0 16px;
+      font-size: clamp(40px, 6vw, 82px);
+      line-height: .95;
+      letter-spacing: -.08em;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .lead-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      padding: 16px 16px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      outline: none;
+      transition: border-color .2s ease, background .2s ease;
+    }
+
+    textarea { min-height: 124px; resize: vertical; }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,.44); }
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(182,255,92,.65);
+      background: rgba(255,255,255,.12);
+    }
+
+    select option { color: #111; }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      padding: 22px clamp(18px, 5vw, 72px) 38px;
+      color: rgba(255,255,255,.48);
+      font-size: 13px;
+    }
+
+    .sound-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 22;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(5,4,10,.58);
+      backdrop-filter: blur(16px);
+      cursor: pointer;
+    }
+
+    @media (max-width: 980px) {
+      .nav { display: none; }
+      .hero-grid,
+      .showcase,
+      .contact-box { grid-template-columns: 1fr; }
+      .pitch-card { max-width: 620px; }
+      .cards,
+      .pricing { grid-template-columns: 1fr; }
+      .price-card.featured { transform: none; }
+      .section-head { display: block; }
+    }
+
+    @media (max-width: 640px) {
+      .site-header { padding: 14px 16px; }
+      .header-cta { display: none; }
+      .hero { padding-top: 116px; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .footer { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-bg" aria-hidden="true">
+    <iframe
+      id="yt-bg"
+      src="https://www.youtube.com/embed/LwLXRVJvMN0?autoplay=1&mute=1&controls=0&loop=1&playlist=LwLXRVJvMN0&playsinline=1&modestbranding=1&rel=0&enablejsapi=1"
+      title="AI MV background video"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="cinematic-overlay"></div>
+  <div class="spotlight"></div>
+  <div class="grain"></div>
+
+  <div class="enter-gate" id="enterGate">
+    <div class="enter-card">
+      <div class="enter-kicker"><span class="pulse-dot"></span>AI MV COMMERCIAL STUDIO</div>
+      <h1><span class="gradient-text">把音樂變成<br />會成交的影像</span></h1>
+      <p>點擊進入後，滿版 AI MV 影片將成為網站主視覺背景，自動播放、重複循環，打造沉浸式招商第一印象。</p>
+      <button class="enter-button" id="enterButton">點擊進入網站 ✦</button>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <a href="#top" class="brand" aria-label="AI MV Studio home">
+      <span class="brand-mark">MV</span>
+      <span>AI MV Studio</span>
+    </a>
+    <nav class="nav" aria-label="主選單">
+      <a href="#service">製作方案</a>
+      <a href="#process">合作流程</a>
+      <a href="#pricing">招商方案</a>
+      <a href="#contact">預約洽談</a>
+    </nav>
+    <a class="header-cta" href="#contact">成為合作夥伴</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse-dot"></span>AI MUSIC VIDEO PRODUCTION</div>
+          <h2>AI MV 製作<br /><span class="gradient-text">招商提案網站</span></h2>
+          <p>用 AI 影像生成、電影級美術、節奏剪輯與社群投放素材，協助品牌、唱片公司、藝人與投資方，用更快速度打造高辨識度音樂影像資產。</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#contact">預約 30 分鐘招商簡報</a>
+            <a class="secondary-button" href="#service">查看製作能力</a>
+          </div>
+          <div class="hero-stats" aria-label="關鍵優勢">
+            <div class="stat"><strong>7-21</strong><span>天完成概念、生成、剪輯與交付</span></div>
+            <div class="stat"><strong>4K</strong><span>可交付主片、直式短影音與宣傳素材</span></div>
+            <div class="stat"><strong>∞</strong><span>風格可延展，適合系列化內容經營</span></div>
+          </div>
+        </div>
+
+        <aside class="pitch-card">
+          <h3>為什麼現在投資 AI MV？</h3>
+          <p style="color: var(--muted); line-height: 1.8;">音樂宣傳正在從單支 MV 轉向「多版本、多平台、多語境」內容矩陣。AI 讓視覺風格快速測試、低成本迭代，並能為每首歌建立獨特世界觀。</p>
+          <ul class="pitch-list">
+            <li><span class="check">✓</span><span>降低傳統拍攝場地、道具、演員與重拍成本</span></li>
+            <li><span class="check">✓</span><span>快速產出主視覺、短影音、封面與招商物料</span></li>
+            <li><span class="check">✓</span><span>適合品牌置入、藝人孵化、專輯企劃與 IP 合作</span></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="service">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">SERVICE MODULES</div>
+            <h2>從一首歌，建立一個能被記住的視覺宇宙。</h2>
+          </div>
+          <p>不只是生成影片，而是把音樂定位、角色、場景、鏡頭語言與商業轉換一起設計。</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="num">01</span>
+            <h3>MV 概念企劃</h3>
+            <p>解析歌曲情緒、受眾與品牌定位，產出故事線、世界觀、視覺參考與分鏡節奏。</p>
+          </article>
+          <article class="card">
+            <span class="num">02</span>
+            <h3>AI 影像生成</h3>
+            <p>建立角色一致性、場景風格、鏡頭運動與美術規範，生成具有商業質感的視覺素材。</p>
+          </article>
+          <article class="card">
+            <span class="num">03</span>
+            <h3>剪輯與社群延展</h3>
+            <p>完成主片、預告、直式 Reels/TikTok/Shorts、封面圖與招商提案素材包。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="section-inner showcase">
+        <div class="showcase-panel large">
+          <div>
+            <div class="eyebrow">PRODUCTION FLOW</div>
+            <h2 style="font-size: clamp(38px, 5vw, 68px); line-height:.98; letter-spacing:-.075em; margin:18px 0 0;">一套可複製、可放大、可招商的 AI MV 生產線。</h2>
+          </div>
+          <div class="big-word gradient-text">MAKE<br />IT<br />VIRAL</div>
+        </div>
+        <div class="showcase-panel timeline">
+          <div class="timeline-item">
+            <strong>DAY 01</strong>
+            <div><h4>策略訪談</h4><p>確認歌曲、受眾、預算、合作目標與招商亮點。</p></div>
+          </div>
+          <div class="timeline-item">
+            <strong>DAY 03</strong>
+            <div><h4>視覺提案</h4><p>提交 moodboard、角色/場景設定、分鏡與美術方向。</p></div>
+          </div>
+          <div class="timeline-item">
+            <strong>DAY 07</strong>
+            <div><h4>AI 生成與試剪</h4><p>產出關鍵畫面、節奏 demo，快速校準風格與敘事。</p></div>
+          </div>
+          <div class="timeline-item">
+            <strong>DAY 14+</strong>
+            <div><h4>成片交付</h4><p>主片、短影音、封面、投放版型與招商簡報素材包。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">PARTNERSHIP PACKAGES</div>
+            <h2>彈性招商方案，從單支 MV 到長期內容合夥。</h2>
+          </div>
+          <p>以下為網站展示用方案，可依實際預算、授權範圍與交付規格調整。</p>
+        </div>
+        <div class="pricing">
+          <article class="price-card">
+            <h3>Starter</h3>
+            <div class="price">單曲概念版 <span>/ 入門合作</span></div>
+            <ul>
+              <li>✓ 30-60 秒 AI MV 精華</li>
+              <li>✓ 視覺概念與分鏡</li>
+              <li>✓ 3 支直式短影音</li>
+              <li>✓ 適合新歌試水溫</li>
+            </ul>
+          </article>
+          <article class="price-card featured">
+            <h3>Investor Favorite</h3>
+            <div class="price">完整 MV <span>/ 招商主推</span></div>
+            <ul>
+              <li>✓ 2-4 分鐘完整 AI MV</li>
+              <li>✓ 角色與世界觀設計</li>
+              <li>✓ 8 支社群宣傳素材</li>
+              <li>✓ 品牌置入版位規劃</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <h3>Studio Partner</h3>
+            <div class="price">季度合夥 <span>/ 內容矩陣</span></div>
+            <ul>
+              <li>✓ 多首歌曲系列化製作</li>
+              <li>✓ 專輯視覺 IP 延展</li>
+              <li>✓ 招商提案與素材包</li>
+              <li>✓ 長期品牌/藝人合作</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="section-inner contact-box">
+        <div>
+          <div class="eyebrow">BOOK A PITCH</div>
+          <h2>讓下一支 MV，成為你的招商入口。</h2>
+          <p>留下合作需求，我們會根據歌曲類型、目標受眾、預算區間與發行時程，規劃專屬 AI MV 製作與招商提案。</p>
+        </div>
+        <form class="lead-form" onsubmit="event.preventDefault(); alert('已收到需求！可將此表單串接到 Email、Google Sheet 或 CRM。');">
+          <div class="field-grid">
+            <input type="text" name="name" placeholder="姓名 / 公司" required />
+            <input type="email" name="email" placeholder="Email" required />
+          </div>
+          <div class="field-grid">
+            <input type="text" name="project" placeholder="歌曲 / 專案名稱" />
+            <select name="budget" aria-label="預算區間">
+              <option value="">預算區間</option>
+              <option>NT$ 50,000 - 100,000</option>
+              <option>NT$ 100,000 - 300,000</option>
+              <option>NT$ 300,000+</option>
+              <option>長期合夥 / 投資洽談</option>
+            </select>
+          </div>
+          <textarea name="message" placeholder="請簡述你的合作目標：例如新歌宣傳、品牌置入、藝人孵化、招商簡報、短影音素材等。"></textarea>
+          <button class="primary-button" type="submit">送出招商洽談需求</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <button class="sound-toggle" id="soundToggle" aria-label="切換背景音效">🔇</button>
+
+  <footer class="footer">
+    <span>© 2026 AI MV Studio. Designed for AI music video partnerships.</span>
+    <span>Full-screen YouTube background · Autoplay · Loop</span>
+  </footer>
+
+  <script>
+    const enterGate = document.getElementById('enterGate');
+    const enterButton = document.getElementById('enterButton');
+    const soundToggle = document.getElementById('soundToggle');
+    const iframe = document.getElementById('yt-bg');
+    let isMuted = true;
+
+    function postToYouTube(command, args = []) {
+      iframe.contentWindow?.postMessage(JSON.stringify({
+        event: 'command',
+        func: command,
+        args
+      }), '*');
+    }
+
+    enterButton.addEventListener('click', () => {
+      enterGate.classList.add('is-hidden');
+      postToYouTube('playVideo');
+    });
+
+    soundToggle.addEventListener('click', () => {
+      isMuted = !isMuted;
+      postToYouTube(isMuted ? 'mute' : 'unMute');
+      soundToggle.textContent = isMuted ? '🔇' : '🔊';
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', event => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
