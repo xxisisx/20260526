@@ -238,22 +238,10 @@
       <!-- Left -->
       <div class="space-y-8 reveal">
 
-        <div
-          class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-soft shadow-soft text-sm text-orangeWarm font-medium">
-          <span class="w-2 h-2 bg-orangeWarm rounded-full"></span>
-          AI × Excel × 資料分析 × 職場效率
-        </div>
-
         <div class="space-y-6">
           <h1 class="text-4xl md:text-6xl font-black leading-tight text-coffee">
             <span id="typingText" class="typing-cursor"></span>
           </h1>
-
-          <p class="text-lg md:text-xl leading-relaxed text-warmGray max-w-2xl">
-            我不只是教 Excel 功能，<br class="hidden md:block">
-            而是幫你用 AI、資料分析與工作流程設計，
-            把每天那些重複、煩躁又耗時間的事情，變得更省力、更清楚、更有效率。
-          </p>
         </div>
 
         <div class="flex flex-wrap gap-4 pt-2">
@@ -373,7 +361,7 @@
         </h2>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-14 mt-20 items-center">
+      <div class="grid lg:grid-cols-2 gap-8 mt-20 items-start">
 
         <div class="reveal">
           <div class="soft-card rounded-[36px] p-10 shadow-card leading-loose text-lg text-warmGray">
@@ -403,7 +391,11 @@
           </div>
         </div>
 
-        <div class="space-y-6 reveal">
+        <div class="reveal flex flex-col gap-6 sticky top-28">
+          <!-- 個人形象照 -->
+          <div class="soft-card rounded-[36px] overflow-hidden shadow-card">
+            <img src="photo/張予個人形象照.png" alt="張予個人形象照" class="w-full h-auto object-cover rounded-[36px]">
+          </div>
 
           <div class="soft-card rounded-3xl p-7 shadow-card">
             <div class="text-sm text-caramel font-semibold">品牌影響力</div>
@@ -624,32 +616,39 @@
       <div class="grid lg:grid-cols-3 gap-8 mt-20">
 
         <!-- 知識衛星課程 -->
-        <a href="https://sat.cool/course/152" target="_blank" class="soft-card rounded-[36px] p-10 shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
-              知識衛星
-            </div>
+        <a href="https://sat.cool/course/152" target="_blank" class="soft-card rounded-[36px] overflow-hidden shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
+          <!-- 課程封面圖 -->
+          <div class="w-full h-48 overflow-hidden bg-peach/20">
+            <img src="photo/主視覺_方形圖_1080x1080 複本@2x.png" alt="AI 時代的 Excel 效率升級術" class="w-full h-full object-cover">
           </div>
 
-          <h3 class="text-2xl font-bold text-coffee leading-snug">
-            AI 時代的 Excel 效率升級術
-          </h3>
+          <div class="p-10">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
+                知識衛星
+              </div>
+            </div>
 
-          <p class="text-warmGray mt-6 leading-relaxed">
-            從資料彙整、公式邏輯，到 AI 輔助分析與工作流程優化，建立真正能應用在職場的效率系統。
-          </p>
+            <h3 class="text-2xl font-bold text-coffee leading-snug">
+              AI 時代的 Excel 效率升級術
+            </h3>
 
-          <div class="mt-8 flex flex-wrap gap-3">
-            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">Excel</span>
-            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">AI 工作流</span>
-            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">自動化</span>
-          </div>
+            <p class="text-warmGray mt-6 leading-relaxed">
+              從資料彙整、公式邏輯，到 AI 輔助分析與工作流程優化，建立真正能應用在職場的效率系統。
+            </p>
 
-          <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
-            前往課程 <i class="fas fa-arrow-right"></i>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">Excel</span>
+              <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">AI 工作流</span>
+              <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">自動化</span>
+            </div>
+
+            <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+              前往課程 <i class="fas fa-arrow-right"></i>
+            </div>
           </div>
         </a>
 
@@ -684,32 +683,39 @@
         </a>
 
         <!-- 書籍 -->
-        <a href="https://www.books.com.tw/products/0011021120" target="_blank" class="soft-card rounded-[36px] p-10 shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
-              <i class="fas fa-book"></i>
-            </div>
-            <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
-              出版作品
-            </div>
+        <a href="https://www.books.com.tw/products/0011021120" target="_blank" class="soft-card rounded-[36px] overflow-hidden shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
+          <!-- 書籍封面圖 -->
+          <div class="w-full h-48 overflow-hidden bg-peach/20 flex items-center justify-center p-6">
+            <img src="photo/F5013_有陰影.png" alt="三秒鐘的出其不意！Excel × AI 幫你工作超省力" class="h-full object-contain">
           </div>
 
-          <h3 class="text-2xl font-bold text-coffee leading-snug">
-            三秒鐘的出其不意！<br>Excel × AI 幫你工作超省力
-          </h3>
+          <div class="p-10">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
+                出版作品
+              </div>
+            </div>
 
-          <p class="text-warmGray mt-6 leading-relaxed">
-            透過實用的 Excel 技巧與 AI 工作方法，幫助你用更聰明的方式完成每一項工作。
-          </p>
+            <h3 class="text-2xl font-bold text-coffee leading-snug">
+              三秒鐘的出其不意！<br>Excel × AI 幫你工作超省力
+            </h3>
 
-          <div class="mt-8 flex flex-wrap gap-3">
-            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">Excel</span>
-            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">AI 應用</span>
-            <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">工作效率</span>
-          </div>
+            <p class="text-warmGray mt-6 leading-relaxed">
+              透過實用的 Excel 技巧與 AI 工作方法，幫助你用更聰明的方式完成每一項工作。
+            </p>
 
-          <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
-            查看書籍 <i class="fas fa-arrow-right"></i>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">Excel</span>
+              <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">AI 應用</span>
+              <span class="px-4 py-2 rounded-full bg-soft text-sm text-coffee">工作效率</span>
+            </div>
+
+            <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+              查看書籍 <i class="fas fa-arrow-right"></i>
+            </div>
           </div>
         </a>
 
@@ -942,8 +948,7 @@
     // Typing Effect
     // ==========================
     const lines = [
-      "分享職場上沒人教你的 Excel 技巧",
-      "幫你省下無數個兩三秒和一肚子煩躁"
+      "分享職場上沒人教你的 Excel 技巧"
     ];
 
     const typingElement = document.getElementById('typingText');
