@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>張予｜AI × Excel × 職場效率專家</title>
+  <title>張予｜Excel × Google Sheets × AI × 職場效率教學</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="photo/LOGO.png">
@@ -32,11 +32,13 @@
             coffee: '#6B4F3D',
             warmGray: '#A69283',
             peach: '#E8DDD0',
-            borderGray: '#DDD3C8'
+            borderGray: '#DDD3C8',
+            olive: '#6B8E23'
           },
           boxShadow: {
             soft: '0 10px 30px rgba(227,154,86,0.12)',
-            card: '0 20px 40px rgba(107,79,61,0.06)'
+            card: '0 20px 40px rgba(107,79,61,0.06)',
+            cardHover: '0 24px 60px rgba(107,79,61,0.12)'
           }
         }
       }
@@ -44,9 +46,7 @@
   </script>
 
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Noto Sans TC', sans-serif;
@@ -55,109 +55,44 @@
       overflow-x: hidden;
     }
 
-    ::selection {
-      background: rgba(227,154,86,0.2);
-    }
+    ::selection { background: rgba(227,154,86,0.2); }
+
+    section { scroll-margin-top: 96px; }
 
     .glass-nav {
-      backdrop-filter: blur(12px);
-      background: rgba(244, 238, 231, 0.85);
-      border-bottom: 1px solid rgba(221,211,200,0.5);
-    }
-
-    .hero-glow {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(227,154,86,0.22) 0%, rgba(227,154,86,0) 70%);
-      filter: blur(20px);
-      z-index: 0;
-      animation: floatGlow 8s ease-in-out infinite;
-    }
-
-    .hero-glow-2 {
-      position: absolute;
-      width: 350px;
-      height: 350px;
-      background: radial-gradient(circle, rgba(232,221,208,0.35) 0%, rgba(232,221,208,0) 70%);
-      filter: blur(20px);
-      z-index: 0;
-      animation: floatGlow 10s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatGlow {
-      0% {
-        transform: translateY(0px) translateX(0px);
-      }
-      50% {
-        transform: translateY(-20px) translateX(10px);
-      }
-      100% {
-        transform: translateY(0px) translateX(0px);
-      }
-    }
-
-    .floating {
-      animation: floating 6s ease-in-out infinite;
-    }
-
-    @keyframes floating {
-      0% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-12px);
-      }
-      100% {
-        transform: translateY(0px);
-      }
-    }
-
-    #typingText {
-      display: inline-block;
-      width: 100%;
-      max-width: 100%;
-      white-space: normal;
-      word-break: break-word;
-    }
-
-    .typing-cursor::after {
-      content: "|";
-      animation: blink 0.8s infinite;
-      margin-left: 4px;
-      color: #E39A56;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1s ease;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
+      backdrop-filter: blur(14px);
+      background: rgba(244, 238, 231, 0.86);
+      border-bottom: 1px solid rgba(221,211,200,0.58);
     }
 
     .soft-card {
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.78);
       backdrop-filter: blur(12px);
     }
 
-    .btn-primary {
-      transition: all 0.3s ease;
+    .icon-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #E39A56;
+      background: rgba(232,221,208,0.58);
+      border: 1px solid rgba(255,255,255,0.76);
+      box-shadow: 0 12px 28px rgba(107,79,61,0.06);
+      margin-bottom: 1.5rem;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(227,154,86,0.18);
+    .icon-badge svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
     }
 
     .grid-pattern {
@@ -167,12 +102,39 @@
       background-size: 40px 40px;
     }
 
-    .decor-circle {
+    .hero-glow {
       position: absolute;
-      border-radius: 999px;
-      opacity: 0.18;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(227,154,86,0.22) 0%, rgba(227,154,86,0) 70%);
+      filter: blur(22px);
       z-index: 0;
+      animation: floatGlow 8s ease-in-out infinite;
     }
+
+    .hero-glow-2 {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(232,221,208,0.45) 0%, rgba(232,221,208,0) 70%);
+      filter: blur(22px);
+      z-index: 0;
+      animation: floatGlow 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-20px) translateX(10px); }
+    }
+
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float-soft { animation: floatSoft 6s ease-in-out infinite; }
+    .float-delay-1 { animation-delay: .8s; }
+    .float-delay-2 { animation-delay: 1.6s; }
 
     .nav-link {
       position: relative;
@@ -182,750 +144,491 @@
       content: "";
       position: absolute;
       left: 0;
-      bottom: -6px;
-      width: 0%;
+      bottom: -7px;
+      width: 0;
       height: 2px;
       background: #E39A56;
-      transition: width 0.3s ease;
+      transition: width .3s ease;
     }
 
-    .nav-link:hover::after {
-      width: 100%;
+    .nav-link:hover::after { width: 100%; }
+
+    .btn-primary,
+    .btn-secondary {
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
     }
 
-    .reel-card {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: block;
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(227,154,86,.18);
     }
 
-    .reel-card:hover {
-      transform: translateY(-4px);
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .8s ease, transform .8s ease;
+      transition-delay: var(--delay, 0ms);
     }
 
-    .reel-card:hover .reel-overlay {
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .course-card:hover,
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(107,79,61,.12);
+    }
+
+    .course-card:hover img { transform: scale(1.045); }
+    .course-card img { transition: transform .45s ease; }
+
+    .arrow-shift i { transition: transform .25s ease; }
+    .course-card:hover .arrow-shift i,
+    .service-card:hover .arrow-shift i { transform: translateX(4px); }
+
+    .stat-scroll::-webkit-scrollbar { display: none; }
+    .stat-scroll { scrollbar-width: none; }
+
+    .sticky-cta {
+      transform: translateY(120%);
+      opacity: 0;
+      transition: transform .35s ease, opacity .35s ease;
+    }
+
+    .sticky-cta.show {
+      transform: translateY(0);
       opacity: 1;
     }
 
-    .reel-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(107, 79, 61, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 10;
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(28px) scale(.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .reel-play-button {
-      width: 60px;
-      height: 60px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: #E39A56;
-      box-shadow: 0 4px 12px rgba(107, 79, 61, 0.2);
+    @keyframes checkIn {
+      from { transform: scale(.4); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
-    .reel-likes {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #6B4F3D;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 2px 8px rgba(107, 79, 61, 0.1);
+    .modal-card { animation: modalIn .38s ease both; }
+    .check-mark { animation: checkIn .35s ease .12s both; }
+
+    @media (max-width: 767px) {
+      .about-copy.collapsed {
+        max-height: 330px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .about-copy.collapsed::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 88px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.94));
+      }
     }
 
-    .reel-likes i {
-      color: #E39A56;
-      font-size: 14px;
-    }
-
-    .likes-loading {
-      color: #A69283;
-      font-style: italic;
-    }
-
-    /* Instagram Embed 样式 */
-    .reel-wrapper {
-      position: relative;
-      display: block;
-      text-decoration: none;
-      overflow: hidden;
-      border-radius: 24px;
-    }
-
-    .reel-embed-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 24px;
-      aspect-ratio: 9/16;
-      background: #f0f0f0;
-    }
-
-    .reel-embed-container blockquote.instagram-media {
-      margin: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      transform: scale(1.2);
-      transform-origin: center;
-    }
-
-    .reel-overlay-link {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(107, 79, 61, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 10;
-      border-radius: 24px;
-    }
-
-    .reel-wrapper:hover .reel-overlay-link {
-      opacity: 1;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
-
-  <!-- Instagram Embed Script -->
-  <script async src="https://www.instagram.com/embed.js"></script>
-
-  <script>
-    // 获取 Instagram Reel 的按讚数
-    async function fetchReelLikes(shortcode) {
-      try {
-        // 使用 Instagram oEmbed API 获取数据
-        const response = await fetch(`https://www.instagram.com/oembed/?url=https://www.instagram.com/reel/${shortcode}/`);
-        const data = await response.json();
-        
-        if (data && data.html) {
-          // 从 HTML 中使用正则表达式提取按讚数
-          const likesMatch = data.html.match(/(\d+(?:,\d+)*)\s*(?:個讚|Like)/i);
-          if (likesMatch && likesMatch[1]) {
-            return parseInt(likesMatch[1].replace(/,/g, ''));
-          }
-        }
-        return null;
-      } catch (error) {
-        console.log('Cannot fetch likes for:', shortcode);
-        return null;
-      }
-    }
-
-    // 格式化按讚数
-    function formatLikes(count) {
-      if (count === null || count === undefined) return '點擊查看';
-      if (count >= 1000000) {
-        return (count / 1000000).toFixed(1) + 'M 個讚';
-      } else if (count >= 1000) {
-        return (count / 1000).toFixed(1) + 'K 個讚';
-      }
-      return count + ' 個讚';
-    }
-
-    // 初始化 Reel 卡片
-    async function initReelCards() {
-      const likesElements = document.querySelectorAll('.reel-likes');
-      
-      for (const likesElement of likesElements) {
-        const shortcode = likesElement.dataset.shortcode;
-        
-        // 获取按讚数
-        const likes = await fetchReelLikes(shortcode);
-        
-        if (likes !== null && likes > 0) {
-          likesElement.innerHTML = `<i class="fas fa-heart"></i> ${formatLikes(likes)}`;
-        } else {
-          likesElement.innerHTML = `<i class="fas fa-heart"></i> <span class="likes-loading">點擊查看</span>`;
-        }
-      }
-
-      // 加载 Instagram embed
-      if (window.instgrm && window.instgrm.Embed) {
-        window.instgrm.Embed.process();
-      }
-    }
-
-    // 页面加载完毕后初始化
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(initReelCards, 1000);
-      });
-    } else {
-      setTimeout(initReelCards, 1000);
-    }
-
-    // 页面完全加载后再次处理 embed
-    window.addEventListener('load', () => {
-      if (window.instgrm && window.instgrm.Embed) {
-        window.instgrm.Embed.process();
-      }
-    });
-  </script>
 </head>
 
 <body>
-
-  <!-- Floating Background Decorations -->
-  <div class="decor-circle bg-orangeWarm w-40 h-40 top-20 left-[-50px] blur-3xl fixed" style="opacity: 0.15;"></div>
-  <div class="decor-circle bg-peach w-56 h-56 bottom-20 right-[-50px] blur-3xl fixed" style="opacity: 0.12;"></div>
+  <!-- Background Decorations -->
+  <div class="fixed top-20 -left-16 w-44 h-44 rounded-full bg-orangeWarm blur-3xl opacity-[.14] pointer-events-none"></div>
+  <div class="fixed bottom-20 -right-16 w-60 h-60 rounded-full bg-peach blur-3xl opacity-[.14] pointer-events-none"></div>
 
   <!-- Navbar -->
   <nav class="fixed top-0 left-0 w-full z-50 glass-nav">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#hero" class="font-bold text-xl text-coffee tracking-wide hover:text-orangeWarm transition-colors inline-flex items-center">
-        <img src="photo/LOGO.png" alt="Excel 廣播電台 logo" class="w8 h-8 mr-3">
-        張予｜Excel 廣播電台
+    <div class="max-w-7xl mx-auto px-5 md:px-6 py-3 flex items-center justify-between">
+      <a href="#hero" class="font-bold text-base md:text-lg text-coffee tracking-wide hover:text-orangeWarm transition-colors inline-flex items-center">
+        <img src="photo/LOGO.png" alt="Excel 廣播電台 logo" class="w-7 h-7 mr-3 rounded-md">
+        <span class="hidden sm:inline">張予｜Excel 廣播電台</span>
+        <span class="sm:hidden">張予</span>
       </a>
 
-      <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-coffee/70 hover:text-coffee">
-        <a href="#hero" class="nav-link">首頁</a>
-        <a href="#about" class="nav-link">關於我</a>
-        <a href="#courses" class="nav-link">產品服務</a>
-        <a href="#consult" class="nav-link">預約諮詢</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-coffee/75">
+        <a href="#about" class="nav-link hover:text-coffee">關於我</a>
+        <a href="#courses" class="nav-link hover:text-coffee">課程與作品</a>
+        <a href="#services" class="nav-link hover:text-coffee">客製服務</a>
+        <a href="#contact" class="px-5 py-2 rounded-full bg-orangeWarm text-white hover:bg-[#D18442] transition-colors shadow-soft">合作洽詢</a>
       </div>
 
-      <!-- Mobile Button -->
-      <button id="menuBtn" class="md:hidden text-coffee">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M4 6h16M4 12h16M4 18h16" />
+      <button id="menuBtn" class="md:hidden text-coffee" aria-label="開啟選單" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu"
-      class="hidden md:hidden px-6 pb-6 text-warmGray bg-[#F4EEE7]/95 backdrop-blur-xl">
-      <div class="flex flex-col gap-5 pt-4">
-        <a href="#hero" class="mobile-link">首頁</a>
-        <a href="#about" class="mobile-link">關於我</a>
-        <a href="#courses" class="mobile-link">產品服務</a>
-        <a href="#consult" class="mobile-link">預約諮詢</a>
+    <div id="mobileMenu" class="hidden md:hidden px-6 pb-6 text-warmGray bg-[#F4EEE7]/96 backdrop-blur-xl border-t border-borderGray/50">
+      <div class="flex flex-col gap-5 pt-4 font-medium">
+        <a href="#about" class="mobile-link hover:text-orangeWarm">關於我</a>
+        <a href="#courses" class="mobile-link hover:text-orangeWarm">課程與作品</a>
+        <a href="#services" class="mobile-link hover:text-orangeWarm">客製服務</a>
+        <a href="#contact" class="mobile-link rounded-full bg-orangeWarm text-white text-center py-3 shadow-soft">合作洽詢</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section id="hero"
-    class="relative min-h-screen flex items-center overflow-hidden pt-28 pb-20 px-6">
-
-    <div class="hero-glow top-[-100px] left-[-100px]"></div>
+  <section id="hero" class="relative min-h-[calc(100vh-76px)] flex items-center overflow-hidden pt-24 md:pt-26 pb-12 md:pb-14 px-5 md:px-6">
+    <div class="hero-glow top-[-140px] left-[-140px]"></div>
     <div class="hero-glow-2 bottom-0 right-0"></div>
 
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
-
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-[0.95fr_0.9fr] gap-10 lg:gap-12 items-center relative z-10">
       <!-- Left -->
-      <div class="space-y-8 reveal">
+      <div class="space-y-7 md:space-y-8 reveal">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/60 border border-white/80 px-4 py-2 text-sm text-coffee shadow-card">
+          <span class="w-2 h-2 rounded-full bg-orangeWarm"></span>
+          Excel × Google Sheets × AI × 職場效率教學
+        </div>
 
-        <div class="space-y-6 min-h-[6rem] md:min-h-[9.5rem]">
-          <h1 class="text-4xl md:text-6xl font-black leading-tight text-coffee">
-            <span id="typingText">分享職場上沒人教你的 Excel 技巧</span>
+        <div class="space-y-5">
+          <h1 class="text-[2.65rem] md:text-[3.45rem] xl:text-[4rem] font-black leading-[1.08] text-coffee tracking-tight">
+            把試算表和 AI，<br class="hidden md:block">
+            變成你的職場效率工具
           </h1>
+
+          <p class="text-lg md:text-xl text-warmGray leading-relaxed max-w-xl">
+            從資料整理、公式邏輯、報表視覺化到 AI 輔助流程，將常見工具轉化成真正能落地的工作方法，讓每天的工作更清楚、更省力。
+          </p>
         </div>
 
-        <div class="flex flex-wrap gap-3 pt-4">
-          <span class="inline-flex items-center rounded-full bg-[#6B8E23] text-white px-6 py-3 text-sm font-semibold shadow-soft">
-            Excel
-          </span><span class="inline-flex items-center rounded-full bg-orangeWarm text-white px-6 py-3 text-sm font-semibold shadow-soft">
-            Google Sheets
-          </span>
-          <span class="inline-flex items-center rounded-full bg-[#D9B38C] text-white px-6 py-3 text-sm font-semibold shadow-soft">
-            資料視覺化
-          </span>
-          <span class="inline-flex items-center rounded-full bg-[#C47D4A] text-white px-6 py-3 text-sm font-semibold shadow-soft">
-            AI 自動化
-          </span>
-
+        <div class="flex flex-col sm:flex-row gap-4 pt-1">
+          <a href="#contact" class="btn-primary inline-flex items-center justify-center gap-2 rounded-full bg-orangeWarm px-7 py-4 text-white font-semibold shadow-soft">
+            預約合作洽詢 <i class="fas fa-arrow-right text-sm"></i>
+          </a>
+          <a href="#courses" class="btn-secondary inline-flex items-center justify-center gap-2 rounded-full bg-white/70 px-7 py-4 text-coffee font-semibold border border-white/80 shadow-card">
+            查看課程與作品
+          </a>
         </div>
 
-        <!-- Trust -->
-        <!-- Trust -->
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-5 pt-0">
-          <div class="soft-card rounded-3xl p-4 shadow-card">
-            <div class="text-2xl font-black text-orangeWarm">14.5 萬 +</div>
-            <div class="text-sm text-warmGray mt-2">Instagram 追蹤者</div>
-          </div>
-
-          <div class="soft-card rounded-3xl p-4 shadow-card">
-            <div class="text-2xl font-black text-orangeWarm">5000 +</div>
-            <div class="text-sm text-warmGray mt-2">累計學員人數</div>
-          </div>
-
-          <div class="soft-card rounded-3xl p-4 shadow-card col-span-2 md:col-span-1">
-            <div class="text-2xl font-black text-orangeWarm">企業 x 校園</div>
-            <div class="text-sm text-warmGray mt-2">多場內訓與授課經驗</div>
-          </div>
+        <div class="inline-flex flex-wrap items-center gap-x-4 gap-y-2 rounded-3xl bg-white/58 border border-white/80 px-5 py-4 shadow-card text-sm md:text-base text-warmGray">
+          <span><strong class="text-orangeWarm font-black">14.5 萬+</strong> 社群追蹤</span>
+          <span class="hidden sm:inline text-borderGray">｜</span>
+          <span><strong class="text-orangeWarm font-black">5000+</strong> 累計學員</span>
+          <span class="hidden sm:inline text-borderGray">｜</span>
+          <span><strong class="text-orangeWarm font-black">企業 × 校園</strong> 授課經驗</span>
         </div>
       </div>
 
       <!-- Right Visual -->
-      <div class="relative reveal">
-
-        <div class="grid-pattern rounded-[40px] p-8 relative overflow-hidden">
-          <div
-            class="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 shadow-card border border-white/70">
-
-            <div class="space-y-6">
-
-              <div class="flex items-center justify-between">
-                <div>
-                  <div class="text-sm text-warmGray">個人品牌</div>
-                  <div class="text-2xl font-bold text-coffee mt-1">張予｜Excel 廣播電台</div>
-                </div>
+      <div class="relative reveal lg:max-w-[560px] lg:ml-auto" style="--delay: 120ms;">
+        <div class="grid-pattern rounded-[34px] md:rounded-[40px] p-4 md:p-6 relative overflow-visible shadow-card">
+          <div class="soft-card rounded-[28px] md:rounded-[34px] p-4 md:p-5 shadow-card relative overflow-hidden">
+            <div class="relative rounded-[24px] md:rounded-[28px] overflow-hidden bg-peach/40 aspect-[4/4.7]">
+              <img src="photo/張予個人形象照.png" alt="張予個人形象照" class="w-full h-full object-cover object-center">
+              <div class="absolute inset-0 bg-gradient-to-t from-coffee/35 via-transparent to-transparent"></div>
+              <div class="absolute left-5 right-5 bottom-5 text-white">
+                <div class="text-sm opacity-90">張予｜Excel 廣播電台</div>
+                <div class="text-xl md:text-2xl font-black mt-1 leading-snug">把複雜工具變成可落地的工作方法</div>
               </div>
-
-              <div class="space-y-4">
-                <div class="bg-soft rounded-2xl p-4">
-                  <div class="text-sm text-warmGray">擅長領域</div>
-                  <div class="font-semibold mt-2 text-coffee">
-                    Excel、Google Sheets、AI 自動化、資料分析、商用圖表
-                  </div>
-                </div>
-
-                <div class="bg-soft rounded-2xl p-4">
-                  <div class="text-sm text-warmGray">教學特色</div>
-                  <div class="font-semibold mt-2 text-coffee">
-                    把複雜工具變成真正能落地的工作方法
-                  </div>
-                </div>
-
-                <div class="bg-soft rounded-2xl p-4">
-                  <div class="text-sm text-warmGray">課程與合作</div>
-                  <div class="font-semibold mt-2 text-coffee">
-                    Hahow、知識衛星、企業內訓、大專院校
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
+          <div class="hidden sm:block absolute top-16 -left-3 soft-card rounded-2xl px-5 py-4 shadow-card float-soft">
+            <div class="text-xs text-warmGray">把混亂變清楚</div>
+            <div class="font-black text-coffee mt-1">資料整理 × 報表邏輯</div>
+          </div>
+
+          <div class="hidden sm:block absolute top-28 -right-3 soft-card rounded-2xl px-5 py-4 shadow-card float-soft float-delay-1">
+            <div class="text-xs text-warmGray">把重複變自動</div>
+            <div class="font-black text-coffee mt-1">AI × 試算表流程</div>
+          </div>
         </div>
-
       </div>
-
     </div>
   </section>
 
   <!-- About -->
-  <section id="about" class="py-28 px-6">
+  <section id="about" class="py-20 md:py-28 px-5 md:px-6">
     <div class="max-w-6xl mx-auto">
-
       <div class="text-center reveal">
-        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">
-          ABOUT
-        </div>
-
-        <h2 class="text-4xl md:text-5xl font-black text-coffee leading-tight">
-          我相信，真正有價值的科技<br>
+        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">ABOUT</div>
+        <h2 class="text-3xl md:text-5xl font-black text-coffee leading-tight">
+          我相信，真正有價值的科技<br class="hidden md:block">
           是能讓人工作變得更輕鬆
         </h2>
       </div>
 
-      <div class="grid lg:grid-cols-[3fr_2fr] gap-8 mt-20 items-start lg:items-stretch">
+      <div class="max-w-4xl mx-auto mt-14 md:mt-20 reveal">
+        <div id="aboutCopy" class="about-copy collapsed soft-card rounded-[30px] md:rounded-[36px] p-7 md:p-10 shadow-card leading-loose text-base md:text-lg text-warmGray">
+          <p class="text-xl md:text-2xl leading-relaxed font-bold text-coffee mb-6">
+            我擅長把試算表、AI 與資料分析，轉化成職場中真正用得上的效率方法。
+          </p>
 
-        <div class="reveal">
-          <div class="soft-card rounded-[36px] p-10 shadow-card leading-loose text-lg text-warmGray h-full">
-            <p>
-              我畢業於國立臺灣科技大學資訊工程學系，原本走在典型工程師的路上，
-              卻慢慢發現，比起寫出只有少數人看得懂的技術，我更想做的是——
-              <span class="text-orangeWarm font-semibold">讓更多人真的用得懂科技。</span>
-            </p>
+          <p>
+            我畢業於國立臺灣科技大學資訊工程學系，原本走在典型工程師的路上，卻慢慢發現，比起寫出只有少數人看得懂的技術，我更想做的是——
+            <span class="text-orangeWarm font-semibold">讓更多人真的用得懂科技。</span>
+          </p>
 
-            <p class="mt-6">
-              後來，我投入教育與產品領域，
-              從 Excel、Google Sheets 到 AI 工具與資料分析，
-              我希望做的不是單純教功能，而是把複雜工具轉化成職場中真正用得上的方法。
-            </p>
+          <p class="mt-6">
+            後來，我投入教育與產品領域，從試算表、AI 工具到資料分析，我希望做的不是單純教功能，而是把複雜工具轉化成職場中真正用得上的方法。
+          </p>
 
-            <p class="mt-6">
-              我創立 Instagram「Excel 廣播電台」，希望用更有趣、更容易理解的方式，
-              陪大家一起解決那些每天都會遇到的工作卡點。
-            </p>
+          <p class="mt-6">
+            我創立 Instagram「Excel 廣播電台」，希望用更有趣、更容易理解的方式，陪大家一起解決那些每天都會遇到的工作卡點。
+          </p>
 
-            <p class="mt-6">
-              對我來說，好的工具不該增加焦慮，
-              而是幫你把混亂變清楚，把重複變自動，把卡住的工作變得更順手。
-              這也是我持續投入教學與內容創作的原因：
-              <span class="text-coffee font-semibold">
-                讓科技不只是少數人的專業，而是每個人都能掌握的工作加速器。
-              </span>
-            </p>
-          </div>
+          <p class="mt-6">
+            對我來說，好的工具不該增加焦慮，而是幫你把混亂變清楚，把重複變自動，把卡住的工作變得更順手。
+            <span class="text-coffee font-semibold">讓科技不只是少數人的專業，而是每個人都能掌握的工作加速器。</span>
+          </p>
         </div>
 
-        <div class="reveal flex flex-col gap-6 h-full">
-          <!-- 個人形象照 -->
-          <div class="soft-card rounded-[36px] overflow-hidden shadow-card h-full">
-            <img src="photo/張予個人形象照.png" alt="張予個人形象照" class="w-full h-full object-cover">
-          </div>
-        </div>
-
+        <button id="aboutToggle" class="md:hidden mt-5 w-full rounded-full bg-white/70 border border-white text-coffee font-semibold py-3 shadow-card">
+          展開更多
+        </button>
       </div>
 
-      <div class="grid lg:grid-cols-3 gap-6 mt-12 reveal">
+      <div class="grid lg:grid-cols-3 gap-6 mt-10 md:mt-12 reveal">
         <div class="soft-card rounded-3xl p-7 shadow-card">
           <div class="text-sm text-orangeWarm font-semibold">品牌影響力</div>
-          <div class="text-2xl font-bold text-coffee mt-2">
-            Excel 廣播電台
-          </div>
-          <p class="text-warmGray mt-4 leading-relaxed">
-            以貼近職場情境的內容，累積超過 14.5 萬名追蹤者，持續推廣 Excel 與 AI 的實用工作應用。
-          </p>
+          <div class="text-2xl font-bold text-coffee mt-2">Excel 廣播電台</div>
+          <p class="text-warmGray mt-4 leading-relaxed">以貼近職場情境的內容，累積超過 14.5 萬名追蹤者，持續推廣 Excel 與 AI 的實用工作應用。</p>
         </div>
 
         <div class="soft-card rounded-3xl p-7 shadow-card">
           <div class="text-sm text-orangeWarm font-semibold">出版作品</div>
-          <div class="text-2xl font-bold text-coffee mt-2">
-            《三秒鐘的出其不意》
-          </div>
-          <p class="text-warmGray mt-4 leading-relaxed">
-            透過 Excel × AI 工作技巧，幫助更多人用更聰明的方式完成工作。
-          </p>
+          <div class="text-2xl font-bold text-coffee mt-2">《三秒鐘的出其不意》</div>
+          <p class="text-warmGray mt-4 leading-relaxed">透過 Excel × AI 工作技巧，幫助更多人用更聰明的方式完成工作。</p>
         </div>
 
         <div class="soft-card rounded-3xl p-7 shadow-card">
           <div class="text-sm text-orangeWarm font-semibold">授課經驗</div>
-          <div class="text-2xl font-bold text-coffee mt-2">
-            企業 × 校園 × 平台合作
-          </div>
-          <p class="text-warmGray mt-4 leading-relaxed">
-            曾受邀至 Hahow、知識衛星、外貿協會、職訓局、大專院校與青年創業單位授課。
-          </p>
+          <div class="text-2xl font-bold text-coffee mt-2">企業 × 校園 × 平台合作</div>
+          <p class="text-warmGray mt-4 leading-relaxed">曾受邀至 Hahow、知識衛星、外貿協會、職訓局、大專院校與青年創業單位授課。</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  
-
- 
-
   <!-- Courses -->
-  <section id="courses" class="py-28 px-6 bg-[#FBF7F2]">
+  <section id="courses" class="py-20 md:py-28 px-5 md:px-6 bg-[#FBF7F2]">
     <div class="max-w-6xl mx-auto">
-
       <div class="text-center reveal">
-        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">
-          COURSES
-        </div>
-
-        <h2 class="text-4xl md:text-5xl font-black text-coffee">
-          線上課程與學習內容
+        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">COURSES & BOOK</div>
+        <h2 class="text-3xl md:text-5xl font-black text-coffee leading-tight">
+          線上課程與出版作品
         </h2>
+       
       </div>
 
-      <div class="grid lg:grid-cols-3 gap-8 mt-20">
-
-        <!-- 知識衛星課程 -->
-        <a href="https://sat.cool/course/152" target="_blank" class="soft-card rounded-[36px] overflow-hidden shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
-          <!-- 課程封面圖 -->
-          <div class="w-full h-48 overflow-hidden bg-peach/20">
+      <div class="grid lg:grid-cols-3 gap-8 mt-14 md:mt-20">
+        <!-- Course 1 -->
+        <a href="https://sat.cool/course/152" target="_blank" rel="noopener" class="course-card soft-card rounded-[30px] md:rounded-[36px] overflow-hidden shadow-card reveal transition-all duration-300 flex flex-col" style="--delay: 0ms;">
+          <div class="relative w-full h-48 overflow-hidden bg-peach/20">
             <img src="photo/主視覺_原檔_872x480_無logo@2x.png" alt="AI 時代的 Excel 效率升級術" class="w-full h-full object-cover">
+            <div class="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 text-coffee text-sm font-semibold shadow-card">知識衛星</div>
           </div>
 
-          <div class="p-10">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
-                <i class="fas fa-graduation-cap"></i>
-              </div>
-              <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
-                知識衛星
-              </div>
+          <div class="p-7 md:p-9 flex flex-col flex-1">
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">Excel</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">AI</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">資料整理</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">工作效率</span>
             </div>
 
-            <h3 class="text-2xl font-bold text-coffee leading-snug">
-              AI 時代的 Excel 效率升級術
-            </h3>
+            <h3 class="text-2xl font-bold text-coffee leading-snug">AI 時代的 Excel 效率升級術</h3>
+            <p class="text-warmGray mt-5 leading-relaxed">從資料彙整、公式邏輯，到 AI 輔助分析與工作流程優化，建立真正能應用在職場的效率系統。</p>
 
-            <p class="text-warmGray mt-6 leading-relaxed">
-              從資料彙整、公式邏輯，到 AI 輔助分析與工作流程優化，建立真正能應用在職場的效率系統。
-            </p>
-
-            <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+            <div class="arrow-shift mt-auto pt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
               前往課程 <i class="fas fa-arrow-right"></i>
             </div>
           </div>
         </a>
 
-        <!-- Hahow 課程 -->
-        <a href="https://hahow.in/courses/637b48b0e5c42265fdd58e31/" target="_blank" class="soft-card rounded-[36px] overflow-hidden shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
-          <!-- 課程圖 -->
-          <div class="w-full h-48 overflow-hidden bg-peach/20">
+        <!-- Course 2 -->
+        <a href="https://hahow.in/courses/637b48b0e5c42265fdd58e31/" target="_blank" rel="noopener" class="course-card soft-card rounded-[30px] md:rounded-[36px] overflow-hidden shadow-card reveal transition-all duration-300 flex flex-col" style="--delay: 120ms;">
+          <div class="relative w-full h-48 overflow-hidden bg-peach/20">
             <img src="photo/excel資料視覺化.jpg" alt="資料視覺化入門：玩轉 Excel 職場商用圖表" class="w-full h-full object-cover">
+            <div class="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 text-coffee text-sm font-semibold shadow-card">Hahow</div>
           </div>
 
-          <div class="p-10">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
-                <i class="fas fa-chalkboard-user"></i>
-              </div>
-              <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
-                Hahow
-              </div>
+          <div class="p-7 md:p-9 flex flex-col flex-1">
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">Excel</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">資料視覺化</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">商用圖表</span>
             </div>
 
-            <h3 class="text-2xl font-bold text-coffee leading-snug">
-              資料視覺化入門：玩轉 Excel 職場商用圖表
-            </h3>
+            <h3 class="text-2xl font-bold text-coffee leading-snug">資料視覺化入門：玩轉 Excel 職場商用圖表</h3>
+            <p class="text-warmGray mt-5 leading-relaxed">學習如何把數據轉化成真正看得懂、說得清楚的商用圖表與視覺化資訊。</p>
 
-            <p class="text-warmGray mt-6 leading-relaxed">
-              學習如何把數據轉化成真正看得懂、說得清楚的商用圖表與視覺化資訊。
-            </p>
-
-            <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+            <div class="arrow-shift mt-auto pt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
               前往課程 <i class="fas fa-arrow-right"></i>
             </div>
           </div>
         </a>
 
-        <!-- 書籍 -->
-        <a href="https://www.books.com.tw/products/0011021120" target="_blank" class="soft-card rounded-[36px] overflow-hidden shadow-card reveal hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] block">
-          <!-- 書籍封面圖 -->
-          <div class="w-full h-48 overflow-hidden bg-peach/20 flex items-center justify-center p-6">
+        <!-- Book -->
+        <a href="https://www.books.com.tw/products/0011021120" target="_blank" rel="noopener" class="course-card soft-card rounded-[30px] md:rounded-[36px] overflow-hidden shadow-card reveal transition-all duration-300 flex flex-col" style="--delay: 240ms;">
+          <div class="relative w-full h-48 overflow-hidden bg-peach/20 flex items-center justify-center p-6">
             <img src="photo/F5013_有陰影.png" alt="三秒鐘的出其不意！Excel × AI 幫你工作超省力" class="h-full object-contain">
+            <div class="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/90 text-coffee text-sm font-semibold shadow-card">旗標出版</div>
           </div>
 
-          <div class="p-10">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-xl text-coffee">
-                <i class="fas fa-book"></i>
-              </div>
-              <div class="inline-block px-4 py-2 rounded-full bg-peach text-coffee text-sm font-medium">
-                出版作品
-              </div>
+          <div class="p-7 md:p-9 flex flex-col flex-1">
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">Excel</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">AI</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">職場效率</span>
+              <span class="px-3 py-1 rounded-full bg-peach text-coffee text-xs font-semibold">書籍</span>
             </div>
 
-            <h3 class="text-2xl font-bold text-coffee leading-snug">
-              三秒鐘的出其不意！<br>Excel × AI 幫你工作超省力
-            </h3>
+            <h3 class="text-2xl font-bold text-coffee leading-snug">三秒鐘的出其不意！<br>Excel × AI 幫你工作超省力</h3>
+            <p class="text-warmGray mt-5 leading-relaxed">透過實用的 Excel 技巧與 AI 工作方法，幫助你用更聰明的方式完成每一項工作。</p>
 
-            <p class="text-warmGray mt-6 leading-relaxed">
-              透過實用的 Excel 技巧與 AI 工作方法，幫助你用更聰明的方式完成每一項工作。
-            </p>
-
-            <div class="mt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
+            <div class="arrow-shift mt-auto pt-8 text-orangeWarm font-semibold inline-flex items-center gap-2">
               查看書籍 <i class="fas fa-arrow-right"></i>
             </div>
           </div>
         </a>
-
-      </div>
-    </div>
-  </section>
-
- <!-- Services -->
-  <section id="services" class="py-28 px-6">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="text-center reveal">
-        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">
-          SERVICES
-        </div>
-
-        <h2 class="text-4xl md:text-5xl font-black text-coffee">
-          把工具真正變成你的工作加速器
-        </h2>
-
-        <p class="text-warmGray text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
-          不論你是剛開始接觸 Excel、希望優化工作流程，
-          或正在導入 AI 與資料分析，我都會用最容易理解的方式，幫你建立真正能落地的能力。
-        </p>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-8 mt-20">
-
-        <!-- Card -->
-        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
-          <div class="text-5xl mb-6">📊</div>
-
-          <h3 class="text-2xl font-bold text-coffee">
-            Excel 與資料分析課程
-          </h3>
-
-          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
-            <p><span class="font-semibold text-coffee">適合對象：</span>職場工作者、初學者、行政與企劃人員</p>
-
-            <p><span class="font-semibold text-coffee">解決問題：</span>表格混亂、公式卡關、報表效率低落</p>
-
-            <p><span class="font-semibold text-coffee">學習成果：</span>建立穩固 Excel 邏輯與資料處理能力</p>
-          </div>
-
-          <a href="#consult"
-            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
-            了解更多 →
-          </a>
-        </div>
-
-        <!-- Card -->
-        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
-          <div class="text-5xl mb-6">🤖</div>
-
-          <h3 class="text-2xl font-bold text-coffee">
-            AI 工具與職場效率應用
-          </h3>
-
-          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
-            <p><span class="font-semibold text-coffee">適合對象：</span>想提升工作效率的知識工作者</p>
-
-            <p><span class="font-semibold text-coffee">解決問題：</span>重複性工作耗時、流程混亂</p>
-
-            <p><span class="font-semibold text-coffee">學習成果：</span>建立 AI 協作與自動化思維</p>
-          </div>
-
-          <a href="#consult"
-            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
-            了解更多 →
-          </a>
-        </div>
-
-        <!-- Card -->
-        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
-          <div class="text-5xl mb-6">📈</div>
-
-          <h3 class="text-2xl font-bold text-coffee">
-            資料視覺化與商用圖表
-          </h3>
-
-          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
-            <p><span class="font-semibold text-coffee">適合對象：</span>需要製作簡報、分析報表與商業提案者</p>
-
-            <p><span class="font-semibold text-coffee">解決問題：</span>圖表雜亂、數據難以溝通</p>
-
-            <p><span class="font-semibold text-coffee">學習成果：</span>讓資料更清楚、更有說服力</p>
-          </div>
-
-          <a href="#consult"
-            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
-            了解更多 →
-          </a>
-        </div>
-
-        <!-- Card -->
-        <div class="soft-card rounded-[32px] p-9 shadow-card reveal">
-          <div class="text-5xl mb-6">🏫</div>
-
-          <h3 class="text-2xl font-bold text-coffee">
-            客製化企業與校園內訓
-          </h3>
-
-          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
-            <p><span class="font-semibold text-coffee">適合對象：</span>企業團隊、學校單位、政府與組織</p>
-
-            <p><span class="font-semibold text-coffee">解決問題：</span>團隊效率落差、數據能力不足</p>
-
-            <p><span class="font-semibold text-coffee">學習成果：</span>建立一致且高效率的工作流程</p>
-          </div>
-
-          <a href="#consult"
-            class="inline-flex mt-8 text-orangeWarm font-semibold hover:translate-x-1 transition">
-            了解更多 →
-          </a>
-        </div>
-
       </div>
     </div>
   </section>
 
   
- 
-
-  <!-- Contact Form Section -->
-  <section id="consult" class="py-28 px-6 bg-[#FBF7F2]">
-    <div class="max-w-4xl mx-auto">
-
-      <div class="text-center reveal mb-16">
-        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">
-          CONTACT ME
-        </div>
-
-        <h2 class="text-4xl md:text-5xl font-black text-coffee leading-tight">
-          聯絡我 / 合作洽詢
+  <!-- Services -->
+  <section id="services" class="py-20 md:py-28 px-5 md:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center reveal">
+        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">CUSTOM SERVICES</div>
+        <h2 class="text-3xl md:text-5xl font-black text-coffee leading-tight">
+          客製化 Excel / Google Sheets 課程
         </h2>
+        <p class="text-warmGray text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
+          從個人學習到企業內訓，依照實際工作情境，設計資料整理、公式應用、報表設計、雲端協作與 AI 自動化的學習內容。
+        </p>
+      </div>
 
+      <div class="grid lg:grid-cols-2 gap-8 mt-14 md:mt-20">
+        <a href="#contact" class="service-card soft-card rounded-[30px] md:rounded-[32px] p-7 md:p-9 shadow-card reveal transition-all duration-300 block no-underline" style="--delay: 0ms;">
+          <div class="icon-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3.5" y="4.5" width="17" height="15" rx="2" />
+              <path d="M3.5 9.5h17" />
+              <path d="M8.8 4.5v15" />
+              <path d="M15.2 4.5v15" />
+              <path d="M3.5 14.5h17" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-coffee">試算表與資料效率課程</h3>
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>需要處理報表、資料整理、雲端協作的職場工作者</p>
+            <p><span class="font-semibold text-coffee">解決問題：</span>表格混亂、公式卡關、跨部門協作效率低落</p>
+            <p><span class="font-semibold text-coffee">學習成果：</span>建立可應用在不同工具與情境中的試算表邏輯</p>
+          </div>
+          <div class="arrow-shift inline-flex mt-8 text-orangeWarm font-semibold gap-2">了解更多 <i class="fas fa-arrow-right mt-1"></i></div>
+        </a>
+
+        <a href="#contact" class="service-card soft-card rounded-[30px] md:rounded-[32px] p-7 md:p-9 shadow-card reveal transition-all duration-300 block no-underline" style="--delay: 120ms;">
+          <div class="icon-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="7" y="7" width="10" height="10" rx="2.5" />
+              <path d="M9.5 2.5v3" />
+              <path d="M14.5 2.5v3" />
+              <path d="M9.5 18.5v3" />
+              <path d="M14.5 18.5v3" />
+              <path d="M2.5 9.5h3" />
+              <path d="M2.5 14.5h3" />
+              <path d="M18.5 9.5h3" />
+              <path d="M18.5 14.5h3" />
+              <path d="M10 12h4" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-coffee">AI 工具與職場效率應用</h3>
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>想提升工作效率的知識工作者</p>
+            <p><span class="font-semibold text-coffee">解決問題：</span>重複性工作耗時、資料整理流程混亂</p>
+            <p><span class="font-semibold text-coffee">學習成果：</span>建立 AI 協作、自動化與流程優化思維</p>
+          </div>
+          <div class="arrow-shift inline-flex mt-8 text-orangeWarm font-semibold gap-2">了解更多 <i class="fas fa-arrow-right mt-1"></i></div>
+        </a>
+
+        <a href="#contact" class="service-card soft-card rounded-[30px] md:rounded-[32px] p-7 md:p-9 shadow-card reveal transition-all duration-300 block no-underline" style="--delay: 240ms;">
+          <div class="icon-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4.5v15h16" />
+              <path d="M7 15.5l4-4 3 3 5-7" />
+              <path d="M15.5 7.5H19v3.5" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-coffee">資料視覺化與商用圖表</h3>
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>需要製作簡報、分析報表與商業提案者</p>
+            <p><span class="font-semibold text-coffee">解決問題：</span>圖表雜亂、數據難以溝通、報告缺乏重點</p>
+            <p><span class="font-semibold text-coffee">學習成果：</span>讓資料更清楚、更有說服力</p>
+          </div>
+          <div class="arrow-shift inline-flex mt-8 text-orangeWarm font-semibold gap-2">了解更多 <i class="fas fa-arrow-right mt-1"></i></div>
+        </a>
+
+        <a href="#contact" class="service-card soft-card rounded-[30px] md:rounded-[32px] p-7 md:p-9 shadow-card reveal transition-all duration-300 block no-underline" style="--delay: 360ms;">
+          <div class="icon-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 21h18" />
+              <path d="M5 21V9l7-4 7 4v12" />
+              <path d="M9 21v-7h6v7" />
+              <path d="M9 10h.01" />
+              <path d="M12 10h.01" />
+              <path d="M15 10h.01" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-coffee">客製化企業與校園內訓</h3>
+          <div class="mt-6 space-y-4 text-warmGray leading-relaxed">
+            <p><span class="font-semibold text-coffee">適合對象：</span>企業團隊、學校單位、政府與組織</p>
+            <p><span class="font-semibold text-coffee">解決問題：</span>團隊效率落差、數據能力不足、工具使用方式不一致</p>
+            <p><span class="font-semibold text-coffee">學習成果：</span>建立一致且高效率的工作流程</p>
+          </div>
+          <div class="arrow-shift inline-flex mt-8 text-orangeWarm font-semibold gap-2">了解更多 <i class="fas fa-arrow-right mt-1"></i></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 md:py-28 px-5 md:px-6 bg-[#FBF7F2]">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center reveal mb-12 md:mb-16">
+        <div class="text-orangeWarm font-medium tracking-widest text-sm mb-4">CONTACT ME</div>
+        <h2 class="text-3xl md:text-5xl font-black text-coffee leading-tight">聯絡我 / 合作洽詢</h2>
         <p class="text-lg text-warmGray leading-relaxed mt-6 max-w-2xl mx-auto">
           無論是企業內訓、學校講座、品牌合作，填寫下方表單，我們將盡快與您聯絡。
         </p>
         <p class="text-lg text-warmGray leading-relaxed max-w-2xl mx-auto">
-          或是直接使用 Email: excel.radio.tw@gmail.com 聯繫我。
+          或直接使用 Email: <a href="mailto:excel.radio.tw@gmail.com" class="text-orangeWarm font-semibold hover:underline">excel.radio.tw@gmail.com</a> 聯繫我。
         </p>
       </div>
 
-      <!-- Contact Form -->
-      <div class="soft-card rounded-[36px] p-10 md:p-14 shadow-card reveal">
+      <div class="soft-card rounded-[30px] md:rounded-[36px] p-7 md:p-14 shadow-card reveal">
         <form id="contactForm" class="space-y-6">
-          
-          <!-- Name Field -->
           <div>
-            <label for="nameInput" class="block text-sm font-semibold text-coffee mb-3">
-              姓名 <span class="text-orangeWarm">*</span>
-            </label>
-            <input 
-              type="text" 
-              id="nameInput" 
-              name="name" 
-              placeholder="請輸入您的姓名"
-              required
-              class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee placeholder-warmGray/50 focus:outline-none focus:border-orangeWarm transition-colors"
-            />
+            <label for="nameInput" class="block text-sm font-semibold text-coffee mb-3">姓名 <span class="text-orangeWarm">*</span></label>
+            <input type="text" id="nameInput" name="name" placeholder="請輸入您的姓名" required class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee placeholder-warmGray/50 focus:outline-none focus:border-orangeWarm transition-colors" />
           </div>
 
-          <!-- Email Field -->
           <div>
-            <label for="emailInput" class="block text-sm font-semibold text-coffee mb-3">
-              Email <span class="text-orangeWarm">*</span>
-            </label>
-            <input 
-              type="email" 
-              id="emailInput" 
-              name="email" 
-              placeholder="請輸入您的 Email"
-              required
-              class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee placeholder-warmGray/50 focus:outline-none focus:border-orangeWarm transition-colors"
-            />
+            <label for="emailInput" class="block text-sm font-semibold text-coffee mb-3">Email <span class="text-orangeWarm">*</span></label>
+            <input type="email" id="emailInput" name="email" placeholder="請輸入您的 Email" required class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee placeholder-warmGray/50 focus:outline-none focus:border-orangeWarm transition-colors" />
           </div>
 
-          <!-- Inquiry Type Field -->
           <div>
-            <label for="typeSelect" class="block text-sm font-semibold text-coffee mb-3">
-              企劃類型 <span class="text-orangeWarm">*</span>
-            </label>
-            <select 
-              id="typeSelect" 
-              name="type" 
-              required
-              class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee focus:outline-none focus:border-orangeWarm transition-colors appearance-none cursor-pointer"
-              style="background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23E39A56%22 stroke-width=%222%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px;"
-            >
+            <label for="typeSelect" class="block text-sm font-semibold text-coffee mb-3">企劃類型 <span class="text-orangeWarm">*</span></label>
+            <select id="typeSelect" name="type" required class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee focus:outline-none focus:border-orangeWarm transition-colors appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23E39A56%22 stroke-width=%222%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px;">
               <option value="">-- 請選擇 --</option>
               <option value="個人課程">個人課程</option>
               <option value="企業內訓">企業內訓</option>
@@ -935,120 +638,139 @@
             </select>
           </div>
 
-          <!-- Message Field -->
           <div>
-            <label for="messageInput" class="block text-sm font-semibold text-coffee mb-3">
-              需求簡述 <span class="text-orangeWarm">*</span>
-            </label>
-            <textarea 
-              id="messageInput" 
-              name="message" 
-              placeholder="請簡單說明您的需求..." 
-              rows="5"
-              required
-              class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee placeholder-warmGray/50 focus:outline-none focus:border-orangeWarm transition-colors resize-none"
-            ></textarea>
+            <label for="messageInput" class="block text-sm font-semibold text-coffee mb-3">需求簡述 <span class="text-orangeWarm">*</span></label>
+            <textarea id="messageInput" name="message" placeholder="例如：希望安排 2 小時企業內訓，對象約 30 位，主題為 Excel 報表自動化，也希望加入 Google Sheets 協作情境..." rows="5" required class="w-full px-5 py-4 rounded-2xl border-2 border-borderGray bg-white text-coffee placeholder-warmGray/50 focus:outline-none focus:border-orangeWarm transition-colors resize-none"></textarea>
           </div>
 
-          <!-- Submit Button -->
           <div class="pt-4">
-            <button 
-              type="submit" 
-              class="w-full btn-primary px-8 py-4 rounded-full bg-orangeWarm text-white font-semibold shadow-soft hover:bg-[#D18442] transition-colors text-lg"
-            >
+            <button type="submit" class="w-full btn-primary px-8 py-4 rounded-full bg-orangeWarm text-white font-semibold shadow-soft hover:bg-[#D18442] transition-colors text-lg">
               送出需求
             </button>
           </div>
 
-          <p class="text-xs text-warmGray text-center mt-4">
-            您的資料將被保密使用，我們不會與第三方分享。
-          </p>
-
+          <p class="text-xs text-warmGray text-center mt-4">您的資料將被保密使用，我們不會與第三方分享。</p>
         </form>
       </div>
-
     </div>
   </section>
 
-  <!-- Hidden iframe for form submission -->
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
   <!-- Footer -->
-  <footer class="px-6 py-14 border-t border-borderGray">
+  <footer class="px-5 md:px-6 py-14 border-t border-borderGray">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
-
       <div>
-        <div class="text-2xl font-black text-coffee">
-          張予
-        </div>
-
-        <div class="mt-3 text-warmGray leading-relaxed">
-          Excel 廣播電台<br>
-          AI × Excel × 資料分析 × 職場效率
-        </div>
-
-        <div class="mt-5 text-sm text-orangeWarm">
-          用更聰明的方法，把工作變得更輕鬆。
-        </div>
+        <div class="text-2xl font-black text-coffee">張予</div>
+        <div class="mt-3 text-warmGray leading-relaxed">Excel 廣播電台<br>試算表 × AI × 資料分析 × 職場效率</div>
+        <div class="mt-5 text-sm text-orangeWarm">用更聰明的方法，把工作變得更輕鬆。</div>
       </div>
 
       <div class="flex flex-col items-start md:items-end gap-6">
-        <!-- Social Media Icons -->
         <div class="flex gap-4">
-          <!-- LINE -->
-          <a href="https://line.me/ti/g2/rgytye_Awx6w-W7bK_55tI00s8tKDwDV8K6Mug"
-            target="_blank"
-            class="group relative">
+          <a href="https://line.me/ti/g2/rgytye_Awx6w-W7bK_55tI00s8tKDwDV8K6Mug" target="_blank" rel="noopener" class="group relative" aria-label="LINE">
             <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center shadow-card hover:shadow-lg transition-all duration-300 hover:scale-110">
               <i class="fab fa-line text-xl text-green-600"></i>
             </div>
           </a>
-
-          <!-- Facebook -->
-          <a href="https://www.facebook.com/p/Excel-%E5%BB%A3%E6%92%AD%E9%9B%BB%E5%8F%B0-61556206976271/"
-            target="_blank"
-            class="group relative">
+          <a href="https://www.facebook.com/p/Excel-%E5%BB%A3%E6%92%AD%E9%9B%BB%E5%8F%B0-61556206976271/" target="_blank" rel="noopener" class="group relative" aria-label="Facebook">
             <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-card hover:shadow-lg transition-all duration-300 hover:scale-110">
               <i class="fab fa-facebook text-xl text-blue-600"></i>
             </div>
           </a>
-
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/excel.radio/"
-            target="_blank"
-            class="group relative">
+          <a href="https://www.instagram.com/excel.radio/" target="_blank" rel="noopener" class="group relative" aria-label="Instagram">
             <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-50 to-orange-100 flex items-center justify-center shadow-card hover:shadow-lg transition-all duration-300 hover:scale-110">
               <i class="fab fa-instagram text-xl text-orange-500"></i>
             </div>
           </a>
         </div>
-
-        <div class="text-sm text-warmGray">
-          © 2026 Zhang Yu. All Rights Reserved.
-        </div>
+        <div class="text-sm text-warmGray">© 2026 Zhang Yu. All Rights Reserved.</div>
       </div>
-
     </div>
   </footer>
 
+  <!-- Mobile Sticky CTA -->
+  <div id="stickyCta" class="sticky-cta md:hidden fixed bottom-4 left-4 right-4 z-40">
+    <a href="#contact" class="flex items-center justify-center gap-2 rounded-full bg-orangeWarm text-white font-semibold py-4 shadow-cardHover">
+      預約合作洽詢 <i class="fas fa-arrow-right text-sm"></i>
+    </a>
+  </div>
+
   <!-- Success Modal -->
-  <div id="successModal" class="fixed inset-0 bg-black/30 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-[32px] shadow-card p-10 max-w-sm w-full text-center reveal" style="animation: slideUp 0.4s ease;">
-      <div class="text-5xl mb-6">✓</div>
+  <div id="successModal" class="fixed inset-0 bg-black/35 hidden items-center justify-center z-50 p-4">
+    <div class="modal-card bg-white rounded-[32px] shadow-card p-9 md:p-10 max-w-sm w-full text-center">
+      <div class="check-mark mx-auto w-16 h-16 rounded-full bg-orangeWarm/10 text-orangeWarm flex items-center justify-center text-4xl mb-6">✓</div>
       <h3 class="text-2xl font-black text-coffee mb-4">需求已送出</h3>
-      <p class="text-warmGray leading-relaxed mb-8">
-        感謝您的來信！我們已收到您的需求，將盡快與您聯絡。
-      </p>
-      <button 
-        onclick="closeSuccessModal()" 
-        class="btn-primary px-8 py-3 rounded-full bg-orangeWarm text-white font-semibold hover:bg-[#D18442] transition-colors"
-      >
-        關閉
-      </button>
+      <p class="text-warmGray leading-relaxed mb-8">感謝您的來信！我們已收到您的需求，將盡快與您聯絡。</p>
+      <button onclick="closeSuccessModal()" class="btn-primary px-8 py-3 rounded-full bg-orangeWarm text-white font-semibold hover:bg-[#D18442] transition-colors">關閉</button>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
+    // ==========================
+    // Mobile Menu
+    // ==========================
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      menuBtn.setAttribute('aria-expanded', String(!isHidden));
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ==========================
+    // Scroll Reveal Animation with IntersectionObserver
+    // ==========================
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -70px 0px' });
+
+    reveals.forEach(reveal => revealObserver.observe(reveal));
+
+    // ==========================
+    // Mobile About Expand
+    // ==========================
+    const aboutToggle = document.getElementById('aboutToggle');
+    const aboutCopy = document.getElementById('aboutCopy');
+
+    if (aboutToggle && aboutCopy) {
+      aboutToggle.addEventListener('click', () => {
+        const collapsed = aboutCopy.classList.toggle('collapsed');
+        aboutToggle.textContent = collapsed ? '展開更多' : '收合內容';
+      });
+    }
+
+    // ==========================
+    // Mobile Sticky CTA
+    // ==========================
+    const stickyCta = document.getElementById('stickyCta');
+
+    function updateStickyCta() {
+      if (!stickyCta) return;
+      const heroHeight = document.getElementById('hero').offsetHeight;
+      const contactTop = document.getElementById('contact').getBoundingClientRect().top;
+      const shouldShow = window.scrollY > heroHeight * 0.55 && contactTop > window.innerHeight * 0.6;
+      stickyCta.classList.toggle('show', shouldShow);
+    }
+
+    window.addEventListener('scroll', updateStickyCta, { passive: true });
+    window.addEventListener('resize', updateStickyCta);
+    updateStickyCta();
+
     // ==========================
     // Contact Form Handler
     // ==========================
@@ -1060,143 +782,57 @@
       successModal.classList.remove('flex');
     }
 
+    successModal.addEventListener('click', (event) => {
+      if (event.target === successModal) closeSuccessModal();
+    });
+
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // Get form values
-      const name = document.getElementById('nameInput').value;
-      const email = document.getElementById('emailInput').value;
+      const name = document.getElementById('nameInput').value.trim();
+      const email = document.getElementById('emailInput').value.trim();
       const type = document.getElementById('typeSelect').value;
-      const message = document.getElementById('messageInput').value;
+      const message = document.getElementById('messageInput').value.trim();
 
-      // Validate
       if (!name || !email || !type || !message) {
         alert('請填寫所有必填欄位');
         return;
       }
 
-      // Create form data for Google Forms submission
-      const formData = new FormData();
-      formData.append('entry.588998168', name);      // 姓名
-      formData.append('entry.476214014', email);     // Email
-      formData.append('entry.1610329698', type);     // 企劃類型
-      formData.append('entry.1646642689', message);  // 需求簡述
-
-      // Submit via hidden iframe
-      const iframe = document.getElementById('hidden_iframe');
       const formElement = document.createElement('form');
       formElement.action = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeP_Go2gt4v65oGlxJJfiwSDdET9s0-zRfK7JC05e5NLdFvJg/formResponse';
       formElement.method = 'POST';
       formElement.target = 'hidden_iframe';
+      formElement.style.display = 'none';
 
-      // Add form fields
-      const nameField = document.createElement('input');
-      nameField.type = 'hidden';
-      nameField.name = 'entry.588998168';
-      nameField.value = name;
-      formElement.appendChild(nameField);
+      const fields = {
+        'entry.588998168': name,
+        'entry.476214014': email,
+        'entry.1610329698': type,
+        'entry.1646642689': message
+      };
 
-      const emailField = document.createElement('input');
-      emailField.type = 'hidden';
-      emailField.name = 'entry.476214014';
-      emailField.value = email;
-      formElement.appendChild(emailField);
+      Object.entries(fields).forEach(([fieldName, fieldValue]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = fieldName;
+        input.value = fieldValue;
+        formElement.appendChild(input);
+      });
 
-      const typeField = document.createElement('input');
-      typeField.type = 'hidden';
-      typeField.name = 'entry.1610329698';
-      typeField.value = type;
-      formElement.appendChild(typeField);
-
-      const messageField = document.createElement('input');
-      messageField.type = 'hidden';
-      messageField.name = 'entry.1646642689';
-      messageField.value = message;
-      formElement.appendChild(messageField);
-
-      // Append and submit
       document.body.appendChild(formElement);
-      
-      // Show success modal before submitting
+
       successModal.classList.remove('hidden');
       successModal.classList.add('flex');
 
-      // Submit form
       setTimeout(() => {
         formElement.submit();
-        
-        // Remove form element and reset
         setTimeout(() => {
           document.body.removeChild(formElement);
           contactForm.reset();
         }, 100);
-      }, 300);
+      }, 250);
     });
-
-    // ==========================
-    // Mobile Menu
-    // ==========================
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-      });
-    });
-
-    // ==========================
-    // Typing Effect Disabled
-    // ==========================
-    const typingElement = document.getElementById('typingText');
-    if (typingElement) {
-      typingElement.textContent = "分享職場上沒人教你的 Excel 技巧";
-    }
-
-    // ==========================
-    // Scroll Reveal Animation
-    // ==========================
-    const reveals = document.querySelectorAll('.reveal');
-
-    function revealOnScroll() {
-      const windowHeight = window.innerHeight;
-
-      reveals.forEach(reveal => {
-        const revealTop = reveal.getBoundingClientRect().top;
-
-        if (revealTop < windowHeight - 80) {
-          reveal.classList.add('active');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
-
-    // ==========================
-    // Animation for Success Modal
-    // ==========================
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
   </script>
-
 </body>
 </html>
